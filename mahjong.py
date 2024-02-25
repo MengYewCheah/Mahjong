@@ -36,8 +36,53 @@ deck = {
     'eightStick': 33,
     'nineStick': 34,
 }
-startingRow = 300
+deckChinese = {
+    '东': 1,
+    '西': 2,
+    '北': 3,
+    '南': 4,
+    '白': 5,
+    '发': 6,
+    '中': 7,
+    '一同': 8,
+    '三同': 9,
+    '三同': 10,
+    '四同': 11,
+    '五同': 12,
+    '六同': 13,
+    '七同': 14,
+    '八同': 15,
+    '九同': 16,
+    '一万': 17,
+    '二万': 18,
+    '三万': 19,
+    '四万': 20,
+    '五万': 21,
+    '六万': 22,
+    '七万': 23,
+    '八万': 24,
+    '九万': 25,
+    '一条': 26,
+    '二条': 27,
+    '三条': 28,
+    '四条': 29,
+    '五条': 30,
+    '六条': 31,
+    '七条': 32,
+    '八条': 33,
+    '九条': 34,
+}
+startingRow = 450
 startingCol = 130
+
+tableRow = 150
+tableCol = 130
+
+textRow = 100
+textCol = 550
+
+white = (255, 255, 255)
+
 
 class Board:
     def __init__(self):
@@ -82,6 +127,14 @@ class Board:
                             ]
         self.shuffledDecks = self.shuffleDecks()
         self.players = self.assignStartDecks()
+        self.currentPlayer = 0
+        self.pongPlayer = []
+        self.kongPlayer = []
+        self.numberOfTurns = 0
+        self.currentPlayerDisplay = "Current Player is : " + str(self.currentPlayer + 1)
+        self.lastRoundIsPong = False
+        self.newRound = True
+        self.visibleTilesSpriteLocation = []
         self.displayBoard()
 
     def shuffleDecks(self):
@@ -119,10 +172,22 @@ class Board:
         # create the display surface object
         # of specific dimension..e(X, Y).
         scrn = pygame.display.set_mode((X, Y))
-        scrn.fill((0, 163, 108))
 
         # set the pygame window name
         pygame.display.set_caption('MahJong')
+
+        font = pygame.font.Font('freesansbold.ttf', 32)
+
+        # create a text surface object,
+        # on which text is drawn on it.
+        text = font.render('Current Player: 0', True, white)
+
+        # create a rectangular object for the
+        # text surface object
+        textRect = text.get_rect()
+
+        # set the center of the rectangular object.
+        textRect.center = (textRow // 2, textCol // 2)
 
         # create a surface object, image is drawn on it.
         center = pygame.image.load("C:\\Users\\Cheah Meng Yew\\Desktop\\CSS training\\bootstrap\\Learning\\mahjong tiles\\center.png").convert_alpha()
@@ -161,88 +226,301 @@ class Board:
         sevenStick = pygame.image.load("C:\\Users\\Cheah Meng Yew\\Desktop\\CSS training\\bootstrap\\Learning\\mahjong tiles\\sevenStick.png").convert_alpha()
         eightStick = pygame.image.load("C:\\Users\\Cheah Meng Yew\\Desktop\\CSS training\\bootstrap\\Learning\\mahjong tiles\\eightStick.png").convert_alpha()
         nineStick = pygame.image.load("C:\\Users\\Cheah Meng Yew\\Desktop\\CSS training\\bootstrap\\Learning\\mahjong tiles\\nineStick.png").convert_alpha()
-        # Using blit to copy content from one surface to other
-        rowDisplayIndex = startingRow
-        for player in range(len(self.players)):
-            currentPlayer = self.players[player]
+
+
+        status = True
+        while (status):
+            if self.newRound:
+                print(self.newRound)
+            if self.numberOfTurns != 0 and self.newRound:
+                # if self.lastRoundIsPong:
+                #     self.lastRoundIsPong = False
+                #     self.newRound = False
+                # else:
+                self.playerTakeNewCard(self.players[self.currentPlayer])
+                self.newRound = False
+            else :
+                self.newRound = False
+            scrn.fill((0, 163, 108))
+            self.visibleTilesSpriteLocation = []
+
+            tableRowIndex = tableRow
+            displayIndex = tableCol
+            numberOfPieces = 0
+            for i in self.tableCenter :
+                    if i == deck['east']:
+                        scrn.blit(east, (displayIndex, tableRowIndex))
+                    elif i == deck['west']:
+                        scrn.blit(west, (displayIndex, tableRowIndex))
+                    elif i == deck['north']:
+                        scrn.blit(north, (displayIndex, tableRowIndex))
+                    elif i == deck['south']:
+                        scrn.blit(south, (displayIndex, tableRowIndex))
+                    elif i == deck['center']:
+                        scrn.blit(center, (displayIndex, tableRowIndex))
+                    elif i == deck['space']:
+                        scrn.blit(space, (displayIndex, tableRowIndex))
+                    elif i == deck['fa']:
+                        scrn.blit(fa, (displayIndex, tableRowIndex))
+                    elif i == deck['oneCircle']:
+                        scrn.blit(oneCircle, (displayIndex, tableRowIndex))
+                    elif i == deck['twoCircle']:
+                        scrn.blit(twoCircle, (displayIndex, tableRowIndex))
+                    elif i == deck['threeCircle']:
+                        scrn.blit(threeCircle, (displayIndex, tableRowIndex))
+                    elif i == deck['fourCircle']:
+                        scrn.blit(fourCircle, (displayIndex, tableRowIndex))
+                    elif i == deck['fiveCircle']:
+                        scrn.blit(fiveCircle, (displayIndex, tableRowIndex))
+                    elif i == deck['sixCircle']:
+                        scrn.blit(sixCircle, (displayIndex, tableRowIndex))
+                    elif i == deck['sevenCircle']:
+                        scrn.blit(sevenCircle, (displayIndex, tableRowIndex))
+                    elif i == deck['eightCircle']:
+                        scrn.blit(eightCircle, (displayIndex, tableRowIndex))
+                    elif i == deck['nineCircle']:
+                        scrn.blit(nineCircle, (displayIndex, tableRowIndex))
+                    elif i == deck['oneThousand']:
+                        scrn.blit(oneThousand, (displayIndex, tableRowIndex))
+                    elif i == deck['twoThousand']:
+                        scrn.blit(twoThousand, (displayIndex, tableRowIndex))
+                    elif i == deck['threeThousand']:
+                        scrn.blit(threeThousand, (displayIndex, tableRowIndex))
+                    elif i == deck['fourThousand']:
+                        scrn.blit(fourThousand, (displayIndex, tableRowIndex))
+                    elif i == deck['fiveThousand']:
+                        scrn.blit(fiveThousand, (displayIndex, tableRowIndex))
+                    elif i == deck['sixThousand']:
+                        scrn.blit(sixThousand, (displayIndex, tableRowIndex))
+                    elif i == deck['sevenThousand']:
+                        scrn.blit(sevenThousand, (displayIndex, tableRowIndex))
+                    elif i == deck['eightThousand']:
+                        scrn.blit(eightThousand, (displayIndex, tableRowIndex))
+                    elif i == deck['nineThousand']:
+                        scrn.blit(nineThousand, (displayIndex, tableRowIndex))
+                    elif i == deck['oneStick']:
+                        scrn.blit(oneStick, (displayIndex, tableRowIndex))
+                    elif i == deck['twoStick']:
+                        scrn.blit(twoStick, (displayIndex, tableRowIndex))
+                    elif i == deck['threeStick']:
+                        scrn.blit(threeStick, (displayIndex, tableRowIndex))
+                    elif i == deck['fourStick']:
+                        scrn.blit(fourStick, (displayIndex, tableRowIndex))
+                    elif i == deck['fiveStick']:
+                        scrn.blit(fiveStick, (displayIndex, tableRowIndex))
+                    elif i == deck['sixStick']:
+                        scrn.blit(sixStick, (displayIndex, tableRowIndex))
+                    elif i == deck['sevenStick']:
+                        scrn.blit(sevenStick, (displayIndex, tableRowIndex))
+                    elif i == deck['eightStick']:
+                        scrn.blit(eightStick, (displayIndex, tableRowIndex))
+                    elif i == deck['nineStick']:
+                        scrn.blit(nineStick, (displayIndex, tableRowIndex))
+                    numberOfPieces += 1
+                    numberOfRow = numberOfPieces//13
+                    numberofCol = numberOfPieces%13
+                    displayIndex = tableCol + numberofCol*24
+                    tableRowIndex = tableRow + numberOfRow*32
+
+            # for player in self.players:
+            #     player.display()
+            # Using blit to copy content from one surface to other
+            rowDisplayIndex = startingRow
+            # for player in range(len(self.players)):
+            #
+
+            # if player can pong / kong then display those player
+            # if self.pongPlayer != [] or self.kongPlayer != []:
+            #     displayUser = self.pongPlayer.extend(self.kongPlayer)
+            #     for user in displayUser:
+
+            currentPlayer = self.players[self.currentPlayer]
             displayIndex = startingCol
             for i in currentPlayer.decks:
                 if i == deck['east']:
+                    self.visibleTilesSpriteLocation.append(('east', (displayIndex, rowDisplayIndex)))
                     scrn.blit(east, (displayIndex, rowDisplayIndex))
                 elif i == deck['west']:
+                    self.visibleTilesSpriteLocation.append(('west', (displayIndex, rowDisplayIndex)))
                     scrn.blit(west, (displayIndex, rowDisplayIndex))
                 elif i == deck['north']:
+                    self.visibleTilesSpriteLocation.append(('north', (displayIndex, rowDisplayIndex)))
                     scrn.blit(north, (displayIndex, rowDisplayIndex))
                 elif i == deck['south']:
+                    self.visibleTilesSpriteLocation.append(('south', (displayIndex, rowDisplayIndex)))
                     scrn.blit(south, (displayIndex, rowDisplayIndex))
                 elif i == deck['center']:
+                    self.visibleTilesSpriteLocation.append(('center', (displayIndex, rowDisplayIndex)))
                     scrn.blit(center, (displayIndex, rowDisplayIndex))
                 elif i == deck['space']:
+                    self.visibleTilesSpriteLocation.append(('space', (displayIndex, rowDisplayIndex)))
                     scrn.blit(space, (displayIndex, rowDisplayIndex))
                 elif i == deck['fa']:
+                    self.visibleTilesSpriteLocation.append(('fa', (displayIndex, rowDisplayIndex)))
                     scrn.blit(fa, (displayIndex, rowDisplayIndex))
                 elif i == deck['oneCircle']:
+                    self.visibleTilesSpriteLocation.append(('oneCircle', (displayIndex, rowDisplayIndex)))
                     scrn.blit(oneCircle, (displayIndex, rowDisplayIndex))
                 elif i == deck['twoCircle']:
+                    self.visibleTilesSpriteLocation.append(('twoCircle', (displayIndex, rowDisplayIndex)))
                     scrn.blit(twoCircle, (displayIndex, rowDisplayIndex))
                 elif i == deck['threeCircle']:
+                    self.visibleTilesSpriteLocation.append(('threeCircle', (displayIndex, rowDisplayIndex)))
                     scrn.blit(threeCircle, (displayIndex, rowDisplayIndex))
                 elif i == deck['fourCircle']:
+                    self.visibleTilesSpriteLocation.append(('fourCircle', (displayIndex, rowDisplayIndex)))
                     scrn.blit(fourCircle, (displayIndex, rowDisplayIndex))
                 elif i == deck['fiveCircle']:
+                    self.visibleTilesSpriteLocation.append(('fiveCircle', (displayIndex, rowDisplayIndex)))
                     scrn.blit(fiveCircle, (displayIndex, rowDisplayIndex))
                 elif i == deck['sixCircle']:
+                    self.visibleTilesSpriteLocation.append(('sixCircle', (displayIndex, rowDisplayIndex)))
                     scrn.blit(sixCircle, (displayIndex, rowDisplayIndex))
                 elif i == deck['sevenCircle']:
+                    self.visibleTilesSpriteLocation.append(('sevenCircle', (displayIndex, rowDisplayIndex)))
                     scrn.blit(sevenCircle, (displayIndex, rowDisplayIndex))
                 elif i == deck['eightCircle']:
+                    self.visibleTilesSpriteLocation.append(('eightCircle', (displayIndex, rowDisplayIndex)))
                     scrn.blit(eightCircle, (displayIndex, rowDisplayIndex))
                 elif i == deck['nineCircle']:
+                    self.visibleTilesSpriteLocation.append(('nineCircle', (displayIndex, rowDisplayIndex)))
                     scrn.blit(nineCircle, (displayIndex, rowDisplayIndex))
                 elif i == deck['oneThousand']:
+                    self.visibleTilesSpriteLocation.append(('oneThousand', (displayIndex, rowDisplayIndex)))
                     scrn.blit(oneThousand, (displayIndex, rowDisplayIndex))
                 elif i == deck['twoThousand']:
+                    self.visibleTilesSpriteLocation.append(('twoThousand', (displayIndex, rowDisplayIndex)))
                     scrn.blit(twoThousand, (displayIndex, rowDisplayIndex))
                 elif i == deck['threeThousand']:
+                    self.visibleTilesSpriteLocation.append(('threeThousand', (displayIndex, rowDisplayIndex)))
                     scrn.blit(threeThousand, (displayIndex, rowDisplayIndex))
                 elif i == deck['fourThousand']:
+                    self.visibleTilesSpriteLocation.append(('fourThousand', (displayIndex, rowDisplayIndex)))
                     scrn.blit(fourThousand, (displayIndex, rowDisplayIndex))
                 elif i == deck['fiveThousand']:
+                    self.visibleTilesSpriteLocation.append(('fiveThousand', (displayIndex, rowDisplayIndex)))
                     scrn.blit(fiveThousand, (displayIndex, rowDisplayIndex))
                 elif i == deck['sixThousand']:
+                    self.visibleTilesSpriteLocation.append(('sixThousand', (displayIndex, rowDisplayIndex)))
                     scrn.blit(sixThousand, (displayIndex, rowDisplayIndex))
                 elif i == deck['sevenThousand']:
+                    self.visibleTilesSpriteLocation.append(('sevenThousand', (displayIndex, rowDisplayIndex)))
                     scrn.blit(sevenThousand, (displayIndex, rowDisplayIndex))
                 elif i == deck['eightThousand']:
+                    self.visibleTilesSpriteLocation.append(('eightThousand', (displayIndex, rowDisplayIndex)))
                     scrn.blit(eightThousand, (displayIndex, rowDisplayIndex))
                 elif i == deck['nineThousand']:
+                    self.visibleTilesSpriteLocation.append(('nineThousand', (displayIndex, rowDisplayIndex)))
                     scrn.blit(nineThousand, (displayIndex, rowDisplayIndex))
                 elif i == deck['oneStick']:
+                    self.visibleTilesSpriteLocation.append(('oneStick', (displayIndex, rowDisplayIndex)))
                     scrn.blit(oneStick, (displayIndex, rowDisplayIndex))
                 elif i == deck['twoStick']:
+                    self.visibleTilesSpriteLocation.append(('twoStick', (displayIndex, rowDisplayIndex)))
                     scrn.blit(twoStick, (displayIndex, rowDisplayIndex))
                 elif i == deck['threeStick']:
+                    self.visibleTilesSpriteLocation.append(('threeStick', (displayIndex, rowDisplayIndex)))
                     scrn.blit(threeStick, (displayIndex, rowDisplayIndex))
                 elif i == deck['fourStick']:
+                    self.visibleTilesSpriteLocation.append(('fourStick', (displayIndex, rowDisplayIndex)))
                     scrn.blit(fourStick, (displayIndex, rowDisplayIndex))
                 elif i == deck['fiveStick']:
+                    self.visibleTilesSpriteLocation.append(('fiveStick', (displayIndex, rowDisplayIndex)))
                     scrn.blit(fiveStick, (displayIndex, rowDisplayIndex))
                 elif i == deck['sixStick']:
+                    self.visibleTilesSpriteLocation.append(('sixStick', (displayIndex, rowDisplayIndex)))
                     scrn.blit(sixStick, (displayIndex, rowDisplayIndex))
                 elif i == deck['sevenStick']:
+                    self.visibleTilesSpriteLocation.append(('sevenStick', (displayIndex, rowDisplayIndex)))
                     scrn.blit(sevenStick, (displayIndex, rowDisplayIndex))
                 elif i == deck['eightStick']:
+                    self.visibleTilesSpriteLocation.append(('eightStick', (displayIndex, rowDisplayIndex)))
                     scrn.blit(eightStick, (displayIndex, rowDisplayIndex))
                 elif i == deck['nineStick']:
+                    self.visibleTilesSpriteLocation.append(('nineStick', (displayIndex, rowDisplayIndex)))
                     scrn.blit(nineStick, (displayIndex, rowDisplayIndex))
                 displayIndex += 24
-            rowDisplayIndex += 32
 
-        # paint screen one time
-        pygame.display.flip()
-        status = True
-        while (status):
+            pongKongRowDisplayIndex = rowDisplayIndex + 32
+            pongKongDisplayIndex = startingCol
+            for i in currentPlayer.pongdeck:
+                if i == deck['east']:
+                    scrn.blit(east, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['west']:
+                    scrn.blit(west, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['north']:
+                    scrn.blit(north, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['south']:
+                    scrn.blit(south, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['center']:
+                    scrn.blit(center, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['space']:
+                    scrn.blit(space, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['fa']:
+                    scrn.blit(fa, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['oneCircle']:
+                    scrn.blit(oneCircle, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['twoCircle']:
+                    scrn.blit(twoCircle, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['threeCircle']:
+                    scrn.blit(threeCircle, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['fourCircle']:
+                    scrn.blit(fourCircle, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['fiveCircle']:
+                    scrn.blit(fiveCircle, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['sixCircle']:
+                    scrn.blit(sixCircle, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['sevenCircle']:
+                    scrn.blit(sevenCircle, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['eightCircle']:
+                    scrn.blit(eightCircle, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['nineCircle']:
+                    scrn.blit(nineCircle, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['oneThousand']:
+                    scrn.blit(oneThousand, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['twoThousand']:
+                    scrn.blit(twoThousand, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['threeThousand']:
+                    scrn.blit(threeThousand, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['fourThousand']:
+                    scrn.blit(fourThousand, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['fiveThousand']:
+                    scrn.blit(fiveThousand, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['sixThousand']:
+                    scrn.blit(sixThousand, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['sevenThousand']:
+                    scrn.blit(sevenThousand, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['eightThousand']:
+                    scrn.blit(eightThousand, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['nineThousand']:
+                    scrn.blit(nineThousand, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['oneStick']:
+                    scrn.blit(oneStick, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['twoStick']:
+                    scrn.blit(twoStick, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['threeStick']:
+                    scrn.blit(threeStick, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['fourStick']:
+                    scrn.blit(fourStick, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['fiveStick']:
+                    scrn.blit(fiveStick, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['sixStick']:
+                    scrn.blit(sixStick, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['sevenStick']:
+                    scrn.blit(sevenStick, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['eightStick']:
+                    scrn.blit(eightStick, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['nineStick']:
+                    scrn.blit(nineStick, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                pongKongDisplayIndex += 24
 
+
+            text = font.render(self.currentPlayerDisplay, True, white)
+            textRect = text.get_rect()
+            textRect.center = (textCol // 2, textRow // 2)
+            scrn.blit(text, textRect)
+            # paint screen one time
+            pygame.display.flip()
             # iterate over the list of Event objects
             # that was returned by pygame.event.get() method.
             for i in pygame.event.get():
@@ -253,21 +531,106 @@ class Board:
                 if i.type == pygame.QUIT:
                     status = False
 
+                if i.type == pygame.MOUSEBUTTONDOWN:
+                    pos = pygame.mouse.get_pos()
+                    (available, tile) = self.availablePieces(pos[0], pos[1])
+                    if available:
+                        if self.players[self.currentPlayer].removeDeck(self.mapDeckEnglish(tile)):
+                            self.tableCenter.append(self.mapDeckEnglish(tile))
+                            self.nextPlayer(self.mapDeckEnglish(tile))
+                            self.currentPlayerDisplay = "Current Player : " + str(self.currentPlayer + 1)
+                            self.newRound = True
+
+
+
+            # print(self.currentPlayerDisplay)
+            # while True:
+            #     print("Player that can Pong : ", self.pongPlayer)
+            #     print("Player that can Kong : ", self.kongPlayer)
+            #     if len(self.pongPlayer) != 0:
+            #         print("PONG available player : ", self.pongPlayer)
+            #         a = input("Please select a valid player to Pong : ")
+            #         print(a, int(a) in self.pongPlayer)
+            #         pongPieces = self.tableCenter.pop(-1)
+            #         if int(a) in self.pongPlayer or int(a) in self.kongPlayer:
+            #             player = self.players[int(a)]
+            #             if int(a) in self.pongPlayer:
+            #                 player.pong(pongPieces)
+            #             elif int(a) in self.kongPlayer:
+            #                 player.kong(pongPieces)
+            #             self.setCurrentPlayer(int(a))
+            #             self.clearPongOrKongPlayer()
+            #             break
+            #     else:
+            #         a = input("Please play ? ")
+            #         print(a, self.mapDeck(a))
+            #         if self.players[self.currentPlayer].removeDeck(self.mapDeck(a)):
+            #             self.tableCenter.append(self.mapDeck(a))
+            #             self.nextPlayer(self.mapDeck(a))
+            #             self.currentPlayerDisplay = "Current Player : " + str(self.currentPlayer + 1)
+            #             pygame.display.flip()
+            #             break
         # deactivates the pygame library
         pygame.quit()
 
+    def nextPlayer(self, newDeck, pongKongPlayer=None):
+        if pongKongPlayer is not None:
+            self.currentPlayer = (pongKongPlayer + 1) % 4
+        else :
+            self.clearPongOrKongPlayer()
+            self.currentPlayer = (self.currentPlayer + 1) % 4
+            self.numberOfTurns += 1
+        if newDeck is not None:
+            for player in range(len(self.players)):
+                if self.players[player].canPong(newDeck):
+                    self.pongPlayer.append(player)
+                elif self.players[player].canKong(newDeck):
+                    self.kongPlayer.append(player)
+
+    def mapDeck(self, deckName):
+        return deckChinese[deckName]
+
+    def mapDeckEnglish(self, deckName):
+        return deck[deckName]
+
+    def playerTakeNewCard(self, player):
+        player.addDeck(self.shuffledDecks.pop(0))
+
+    def clearPongOrKongPlayer(self):
+        self.pongPlayer = []
+        self.kongPlayer = []
+        self.lastRoundIsPong = True
+
+    def setCurrentPlayer(self, player):
+        self.currentPlayer = player
+
+    def availablePieces(self, row, col):
+        print(row, col)
+        for i in self.visibleTilesSpriteLocation:
+            curRow = i[1][0]
+            curCol = i[1][1]
+            curRowMax = curRow + 24
+            curColMax = curCol + 32
+            if row >= curRow and row <= curRowMax and col >= curCol and col <= curColMax:
+                return (True, i[0])
+        return (False, None)
 class Actor:
     def __init__(self, deck, playerNumber):
         self.decks = []
         self.playerNumber = playerNumber
         self.decks.extend(deck)
         self.decks.sort()
-        self.display()
+        self.pongdeck = []
+        # self.display()
 
     def display(self):
         print('Player : ', self.playerNumber)
+        self.displayDeck(self.decks)
+        self.displayDeck(self.pongdeck)
+
+    def displayDeck(self, decks):
         displayResult = ''
-        for i in self.decks:
+        for i in decks:
             if i == deck['east']:
                 displayResult += '|东|'
             elif i == deck['west']:
@@ -337,5 +700,53 @@ class Actor:
             elif i == deck['nineStick']:
                 displayResult += '|九条|'
         print(displayResult)
+
+    def removeDeck(self, deck):
+        print(self.decks, deck)
+        for i in self.decks:
+            if i == deck:
+                self.decks.remove(deck)
+                return True
+        return False
+
+    def addDeck(self, deck):
+        self.decks.append(deck)
+        self.decks.sort()
+
+    def canPong(self, newDeck):
+        numberOfSimilar = 0
+        for deck in self.decks:
+            if deck == newDeck:
+                numberOfSimilar += 1
+                if numberOfSimilar == 2:
+                    return True
+        return False
+
+    def canKong(self, newDeck):
+        numberOfSimilar = 0
+        for deck in self.decks:
+            if deck == newDeck:
+                numberOfSimilar += 1
+                if numberOfSimilar == 3:
+                    return True
+        return False
+
+    def pong(self, newDeck):
+        if self.canPong(newDeck):
+            self.decks.remove(newDeck)
+            self.decks.remove(newDeck)
+        self.pongdeck.append(newDeck)
+        self.pongdeck.append(newDeck)
+        self.pongdeck.append(newDeck)
+
+    def kong(self, newDeck):
+        if self.canPong(newDeck):
+            self.decks.remove(newDeck)
+            self.decks.remove(newDeck)
+            self.decks.remove(newDeck)
+        self.pongdeck.append(newDeck)
+        self.pongdeck.append(newDeck)
+        self.pongdeck.append(newDeck)
+        self.pongdeck.append(newDeck)
 
 game = Board()
