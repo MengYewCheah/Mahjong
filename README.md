@@ -7,4 +7,5 @@
 PYGAMES
 
 # IMAGES
-![image](https://github.com/MengYewCheah/Mahjong/assets/72537881/9bfc1e08-6b0b-43dd-9aa5-ec1c7a6b2c09)
+https://github.com/MengYewCheah/Mahjong/assets/72537881/4593fed6-c057-436d-ac9d-27b95fcd3b84
+
