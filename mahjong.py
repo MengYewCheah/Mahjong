@@ -8,33 +8,33 @@ deck = {
     'space': 5,
     'fa': 6,
     'center': 7,
-    'oneCircle': 8,
-    'twoCircle': 9,
-    'threeCircle': 10,
-    'fourCircle': 11,
-    'fiveCircle': 12,
-    'sixCircle': 13,
-    'sevenCircle': 14,
-    'eightCircle': 15,
-    'nineCircle': 16,
-    'oneThousand': 17,
-    'twoThousand': 18,
-    'threeThousand': 19,
-    'fourThousand': 20,
-    'fiveThousand': 21,
-    'sixThousand': 22,
-    'sevenThousand': 23,
-    'eightThousand': 24,
-    'nineThousand': 25,
-    'oneStick': 26,
-    'twoStick': 27,
-    'threeStick': 28,
-    'fourStick': 29,
-    'fiveStick': 30,
-    'sixStick': 31,
-    'sevenStick': 32,
-    'eightStick': 33,
-    'nineStick': 34,
+    'onetong': 8,
+    'twotong': 9,
+    'threetong': 10,
+    'fourtong': 11,
+    'fivetong': 12,
+    'sixtong': 13,
+    'seventong': 14,
+    'eighttong': 15,
+    'ninetong': 16,
+    'onewan': 17,
+    'twowan': 18,
+    'threewan': 19,
+    'fourwan': 20,
+    'fivewan': 21,
+    'sixwan': 22,
+    'sevenwan': 23,
+    'eightwan': 24,
+    'ninewan': 25,
+    'onetiao': 26,
+    'twotiao': 27,
+    'threetiao': 28,
+    'fourtiao': 29,
+    'fivetiao': 30,
+    'sixtiao': 31,
+    'seventiao': 32,
+    'eighttiao': 33,
+    'ninetiao': 34,
 }
 deckChinese = {
     '东': 1,
@@ -44,15 +44,15 @@ deckChinese = {
     '白': 5,
     '发': 6,
     '中': 7,
-    '一同': 8,
-    '三同': 9,
-    '三同': 10,
-    '四同': 11,
-    '五同': 12,
-    '六同': 13,
-    '七同': 14,
-    '八同': 15,
-    '九同': 16,
+    '一筒': 8,
+    '三筒': 9,
+    '三筒': 10,
+    '四筒': 11,
+    '五筒': 12,
+    '六筒': 13,
+    '七筒': 14,
+    '八筒': 15,
+    '九筒': 16,
     '一万': 17,
     '二万': 18,
     '三万': 19,
@@ -95,35 +95,35 @@ class Board:
                             deck['fa'], deck['fa'], deck['fa'], deck['fa'],
                             deck['space'], deck['space'], deck['space'], deck['space'],
 
-                            deck['oneCircle'], deck['oneCircle'], deck['oneCircle'], deck['oneCircle'],
-                            deck['twoCircle'], deck['twoCircle'], deck['twoCircle'], deck['twoCircle'],
-                            deck['threeCircle'], deck['threeCircle'], deck['threeCircle'], deck['threeCircle'],
-                            deck['fourCircle'], deck['fourCircle'], deck['fourCircle'], deck['fourCircle'],
-                            deck['fiveCircle'], deck['fiveCircle'], deck['fiveCircle'], deck['fiveCircle'],
-                            deck['sixCircle'], deck['sixCircle'], deck['sixCircle'], deck['sixCircle'],
-                            deck['sevenCircle'], deck['sevenCircle'], deck['sevenCircle'], deck['sevenCircle'],
-                            deck['eightCircle'], deck['eightCircle'], deck['eightCircle'], deck['eightCircle'],
-                            deck['nineCircle'], deck['nineCircle'], deck['nineCircle'], deck['nineCircle'],
+                            deck['onetong'], deck['onetong'], deck['onetong'], deck['onetong'],
+                            deck['twotong'], deck['twotong'], deck['twotong'], deck['twotong'],
+                            deck['threetong'], deck['threetong'], deck['threetong'], deck['threetong'],
+                            deck['fourtong'], deck['fourtong'], deck['fourtong'], deck['fourtong'],
+                            deck['fivetong'], deck['fivetong'], deck['fivetong'], deck['fivetong'],
+                            deck['sixtong'], deck['sixtong'], deck['sixtong'], deck['sixtong'],
+                            deck['seventong'], deck['seventong'], deck['seventong'], deck['seventong'],
+                            deck['eighttong'], deck['eighttong'], deck['eighttong'], deck['eighttong'],
+                            deck['ninetong'], deck['ninetong'], deck['ninetong'], deck['ninetong'],
 
-                            deck['oneStick'], deck['oneStick'], deck['oneStick'], deck['oneStick'],
-                            deck['twoStick'], deck['twoStick'], deck['twoStick'], deck['twoStick'],
-                            deck['threeStick'], deck['threeStick'], deck['threeStick'], deck['threeStick'],
-                            deck['fourStick'], deck['fourStick'], deck['fourStick'], deck['fourStick'],
-                            deck['fiveStick'], deck['fiveStick'], deck['fiveStick'], deck['fiveStick'],
-                            deck['sixStick'], deck['sixStick'], deck['sixStick'], deck['sixStick'],
-                            deck['sevenStick'], deck['sevenStick'], deck['sevenStick'], deck['sevenStick'],
-                            deck['eightStick'], deck['eightStick'], deck['eightStick'], deck['eightStick'],
-                            deck['nineStick'], deck['nineStick'], deck['nineStick'], deck['nineStick'],
+                            deck['onetiao'], deck['onetiao'], deck['onetiao'], deck['onetiao'],
+                            deck['twotiao'], deck['twotiao'], deck['twotiao'], deck['twotiao'],
+                            deck['threetiao'], deck['threetiao'], deck['threetiao'], deck['threetiao'],
+                            deck['fourtiao'], deck['fourtiao'], deck['fourtiao'], deck['fourtiao'],
+                            deck['fivetiao'], deck['fivetiao'], deck['fivetiao'], deck['fivetiao'],
+                            deck['sixtiao'], deck['sixtiao'], deck['sixtiao'], deck['sixtiao'],
+                            deck['seventiao'], deck['seventiao'], deck['seventiao'], deck['seventiao'],
+                            deck['eighttiao'], deck['eighttiao'], deck['eighttiao'], deck['eighttiao'],
+                            deck['ninetiao'], deck['ninetiao'], deck['ninetiao'], deck['ninetiao'],
 
-                            deck['oneThousand'], deck['oneThousand'], deck['oneThousand'], deck['oneThousand'],
-                            deck['twoThousand'], deck['twoThousand'], deck['twoThousand'], deck['twoThousand'],
-                            deck['threeThousand'], deck['threeThousand'], deck['threeThousand'], deck['threeThousand'],
-                            deck['fourThousand'], deck['fourThousand'], deck['fourThousand'], deck['fourThousand'],
-                            deck['fiveThousand'], deck['fiveThousand'], deck['fiveThousand'], deck['fiveThousand'],
-                            deck['sixThousand'], deck['sixThousand'], deck['sixThousand'], deck['sixThousand'],
-                            deck['sevenThousand'], deck['sevenThousand'], deck['sevenThousand'], deck['sevenThousand'],
-                            deck['eightThousand'], deck['eightThousand'], deck['eightThousand'], deck['eightThousand'],
-                            deck['nineThousand'], deck['nineThousand'], deck['nineThousand'], deck['nineThousand'],
+                            deck['onewan'], deck['onewan'], deck['onewan'], deck['onewan'],
+                            deck['twowan'], deck['twowan'], deck['twowan'], deck['twowan'],
+                            deck['threewan'], deck['threewan'], deck['threewan'], deck['threewan'],
+                            deck['fourwan'], deck['fourwan'], deck['fourwan'], deck['fourwan'],
+                            deck['fivewan'], deck['fivewan'], deck['fivewan'], deck['fivewan'],
+                            deck['sixwan'], deck['sixwan'], deck['sixwan'], deck['sixwan'],
+                            deck['sevenwan'], deck['sevenwan'], deck['sevenwan'], deck['sevenwan'],
+                            deck['eightwan'], deck['eightwan'], deck['eightwan'], deck['eightwan'],
+                            deck['ninewan'], deck['ninewan'], deck['ninewan'], deck['ninewan'],
                             ]
         self.shuffledDecks = self.shuffleDecks()
         self.players = self.assignStartDecks()
@@ -197,35 +197,35 @@ class Board:
         north = pygame.image.load(".\\mahjong tiles\\north.png").convert_alpha()
         fa = pygame.image.load(".\\mahjong tiles\\fa.png").convert_alpha()
         space = pygame.image.load(".\\mahjong tiles\\space.png").convert_alpha()
-        oneCircle = pygame.image.load(".\\mahjong tiles\\oneCircle.png").convert_alpha()
-        twoCircle = pygame.image.load(".\\mahjong tiles\\twoCircle.png").convert_alpha()
-        threeCircle = pygame.image.load(".\\mahjong tiles\\threeCircle.png").convert_alpha()
-        fourCircle = pygame.image.load(".\\mahjong tiles\\fourCircle.png").convert_alpha()
-        fiveCircle = pygame.image.load(".\\mahjong tiles\\fiveCircle.png").convert_alpha()
-        sixCircle = pygame.image.load(".\\mahjong tiles\\sixCircle.png").convert_alpha()
-        sevenCircle = pygame.image.load(".\\mahjong tiles\\sevenCircle.png").convert_alpha()
-        eightCircle = pygame.image.load(".\\mahjong tiles\\eightCircle.png").convert_alpha()
-        nineCircle = pygame.image.load(".\\mahjong tiles\\nineCircle.png").convert_alpha()
+        onetong = pygame.image.load(".\\mahjong tiles\\onetong.png").convert_alpha()
+        twotong = pygame.image.load(".\\mahjong tiles\\twotong.png").convert_alpha()
+        threetong = pygame.image.load(".\\mahjong tiles\\threetong.png").convert_alpha()
+        fourtong = pygame.image.load(".\\mahjong tiles\\fourtong.png").convert_alpha()
+        fivetong = pygame.image.load(".\\mahjong tiles\\fivetong.png").convert_alpha()
+        sixtong = pygame.image.load(".\\mahjong tiles\\sixtong.png").convert_alpha()
+        seventong = pygame.image.load(".\\mahjong tiles\\seventong.png").convert_alpha()
+        eighttong = pygame.image.load(".\\mahjong tiles\\eighttong.png").convert_alpha()
+        ninetong = pygame.image.load(".\\mahjong tiles\\ninetong.png").convert_alpha()
 
-        oneThousand = pygame.image.load(".\\mahjong tiles\\oneThousand.png").convert_alpha()
-        twoThousand= pygame.image.load(".\\mahjong tiles\\twoThousand.png").convert_alpha()
-        threeThousand= pygame.image.load(".\\mahjong tiles\\threeThousand.png").convert_alpha()
-        fourThousand = pygame.image.load(".\\mahjong tiles\\fourThousand.png").convert_alpha()
-        fiveThousand = pygame.image.load(".\\mahjong tiles\\fiveThousand.png").convert_alpha()
-        sixThousand = pygame.image.load(".\\mahjong tiles\\sixThousand.png").convert_alpha()
-        sevenThousand = pygame.image.load(".\\mahjong tiles\\sevenThousand.png").convert_alpha()
-        eightThousand = pygame.image.load(".\\mahjong tiles\\eightThousand.png").convert_alpha()
-        nineThousand = pygame.image.load(".\\mahjong tiles\\nineThousand.png").convert_alpha()
+        onewan = pygame.image.load(".\\mahjong tiles\\onewan.png").convert_alpha()
+        twowan= pygame.image.load(".\\mahjong tiles\\twowan.png").convert_alpha()
+        threewan= pygame.image.load(".\\mahjong tiles\\threewan.png").convert_alpha()
+        fourwan = pygame.image.load(".\\mahjong tiles\\fourwan.png").convert_alpha()
+        fivewan = pygame.image.load(".\\mahjong tiles\\fivewan.png").convert_alpha()
+        sixwan = pygame.image.load(".\\mahjong tiles\\sixwan.png").convert_alpha()
+        sevenwan = pygame.image.load(".\\mahjong tiles\\sevenwan.png").convert_alpha()
+        eightwan = pygame.image.load(".\\mahjong tiles\\eightwan.png").convert_alpha()
+        ninewan = pygame.image.load(".\\mahjong tiles\\ninewan.png").convert_alpha()
 
-        oneStick = pygame.image.load(".\\mahjong tiles\\oneStick.png").convert_alpha()
-        twoStick = pygame.image.load(".\\mahjong tiles\\twoStick.png").convert_alpha()
-        threeStick= pygame.image.load(".\\mahjong tiles\\threeStick.png").convert_alpha()
-        fourStick = pygame.image.load(".\\mahjong tiles\\fourStick.png").convert_alpha()
-        fiveStick = pygame.image.load(".\\mahjong tiles\\fiveStick.png").convert_alpha()
-        sixStick = pygame.image.load(".\\mahjong tiles\\sixStick.png").convert_alpha()
-        sevenStick = pygame.image.load(".\\mahjong tiles\\sevenStick.png").convert_alpha()
-        eightStick = pygame.image.load(".\\mahjong tiles\\eightStick.png").convert_alpha()
-        nineStick = pygame.image.load(".\\mahjong tiles\\nineStick.png").convert_alpha()
+        onetiao = pygame.image.load(".\\mahjong tiles\\onetiao.png").convert_alpha()
+        twotiao = pygame.image.load(".\\mahjong tiles\\twotiao.png").convert_alpha()
+        threetiao= pygame.image.load(".\\mahjong tiles\\threetiao.png").convert_alpha()
+        fourtiao = pygame.image.load(".\\mahjong tiles\\fourtiao.png").convert_alpha()
+        fivetiao = pygame.image.load(".\\mahjong tiles\\fivetiao.png").convert_alpha()
+        sixtiao = pygame.image.load(".\\mahjong tiles\\sixtiao.png").convert_alpha()
+        seventiao = pygame.image.load(".\\mahjong tiles\\seventiao.png").convert_alpha()
+        eighttiao = pygame.image.load(".\\mahjong tiles\\eighttiao.png").convert_alpha()
+        ninetiao = pygame.image.load(".\\mahjong tiles\\ninetiao.png").convert_alpha()
 
 
         status = True
@@ -262,60 +262,60 @@ class Board:
                         scrn.blit(space, (displayIndex, tableRowIndex))
                     elif i == deck['fa']:
                         scrn.blit(fa, (displayIndex, tableRowIndex))
-                    elif i == deck['oneCircle']:
-                        scrn.blit(oneCircle, (displayIndex, tableRowIndex))
-                    elif i == deck['twoCircle']:
-                        scrn.blit(twoCircle, (displayIndex, tableRowIndex))
-                    elif i == deck['threeCircle']:
-                        scrn.blit(threeCircle, (displayIndex, tableRowIndex))
-                    elif i == deck['fourCircle']:
-                        scrn.blit(fourCircle, (displayIndex, tableRowIndex))
-                    elif i == deck['fiveCircle']:
-                        scrn.blit(fiveCircle, (displayIndex, tableRowIndex))
-                    elif i == deck['sixCircle']:
-                        scrn.blit(sixCircle, (displayIndex, tableRowIndex))
-                    elif i == deck['sevenCircle']:
-                        scrn.blit(sevenCircle, (displayIndex, tableRowIndex))
-                    elif i == deck['eightCircle']:
-                        scrn.blit(eightCircle, (displayIndex, tableRowIndex))
-                    elif i == deck['nineCircle']:
-                        scrn.blit(nineCircle, (displayIndex, tableRowIndex))
-                    elif i == deck['oneThousand']:
-                        scrn.blit(oneThousand, (displayIndex, tableRowIndex))
-                    elif i == deck['twoThousand']:
-                        scrn.blit(twoThousand, (displayIndex, tableRowIndex))
-                    elif i == deck['threeThousand']:
-                        scrn.blit(threeThousand, (displayIndex, tableRowIndex))
-                    elif i == deck['fourThousand']:
-                        scrn.blit(fourThousand, (displayIndex, tableRowIndex))
-                    elif i == deck['fiveThousand']:
-                        scrn.blit(fiveThousand, (displayIndex, tableRowIndex))
-                    elif i == deck['sixThousand']:
-                        scrn.blit(sixThousand, (displayIndex, tableRowIndex))
-                    elif i == deck['sevenThousand']:
-                        scrn.blit(sevenThousand, (displayIndex, tableRowIndex))
-                    elif i == deck['eightThousand']:
-                        scrn.blit(eightThousand, (displayIndex, tableRowIndex))
-                    elif i == deck['nineThousand']:
-                        scrn.blit(nineThousand, (displayIndex, tableRowIndex))
-                    elif i == deck['oneStick']:
-                        scrn.blit(oneStick, (displayIndex, tableRowIndex))
-                    elif i == deck['twoStick']:
-                        scrn.blit(twoStick, (displayIndex, tableRowIndex))
-                    elif i == deck['threeStick']:
-                        scrn.blit(threeStick, (displayIndex, tableRowIndex))
-                    elif i == deck['fourStick']:
-                        scrn.blit(fourStick, (displayIndex, tableRowIndex))
-                    elif i == deck['fiveStick']:
-                        scrn.blit(fiveStick, (displayIndex, tableRowIndex))
-                    elif i == deck['sixStick']:
-                        scrn.blit(sixStick, (displayIndex, tableRowIndex))
-                    elif i == deck['sevenStick']:
-                        scrn.blit(sevenStick, (displayIndex, tableRowIndex))
-                    elif i == deck['eightStick']:
-                        scrn.blit(eightStick, (displayIndex, tableRowIndex))
-                    elif i == deck['nineStick']:
-                        scrn.blit(nineStick, (displayIndex, tableRowIndex))
+                    elif i == deck['onetong']:
+                        scrn.blit(onetong, (displayIndex, tableRowIndex))
+                    elif i == deck['twotong']:
+                        scrn.blit(twotong, (displayIndex, tableRowIndex))
+                    elif i == deck['threetong']:
+                        scrn.blit(threetong, (displayIndex, tableRowIndex))
+                    elif i == deck['fourtong']:
+                        scrn.blit(fourtong, (displayIndex, tableRowIndex))
+                    elif i == deck['fivetong']:
+                        scrn.blit(fivetong, (displayIndex, tableRowIndex))
+                    elif i == deck['sixtong']:
+                        scrn.blit(sixtong, (displayIndex, tableRowIndex))
+                    elif i == deck['seventong']:
+                        scrn.blit(seventong, (displayIndex, tableRowIndex))
+                    elif i == deck['eighttong']:
+                        scrn.blit(eighttong, (displayIndex, tableRowIndex))
+                    elif i == deck['ninetong']:
+                        scrn.blit(ninetong, (displayIndex, tableRowIndex))
+                    elif i == deck['onewan']:
+                        scrn.blit(onewan, (displayIndex, tableRowIndex))
+                    elif i == deck['twowan']:
+                        scrn.blit(twowan, (displayIndex, tableRowIndex))
+                    elif i == deck['threewan']:
+                        scrn.blit(threewan, (displayIndex, tableRowIndex))
+                    elif i == deck['fourwan']:
+                        scrn.blit(fourwan, (displayIndex, tableRowIndex))
+                    elif i == deck['fivewan']:
+                        scrn.blit(fivewan, (displayIndex, tableRowIndex))
+                    elif i == deck['sixwan']:
+                        scrn.blit(sixwan, (displayIndex, tableRowIndex))
+                    elif i == deck['sevenwan']:
+                        scrn.blit(sevenwan, (displayIndex, tableRowIndex))
+                    elif i == deck['eightwan']:
+                        scrn.blit(eightwan, (displayIndex, tableRowIndex))
+                    elif i == deck['ninewan']:
+                        scrn.blit(ninewan, (displayIndex, tableRowIndex))
+                    elif i == deck['onetiao']:
+                        scrn.blit(onetiao, (displayIndex, tableRowIndex))
+                    elif i == deck['twotiao']:
+                        scrn.blit(twotiao, (displayIndex, tableRowIndex))
+                    elif i == deck['threetiao']:
+                        scrn.blit(threetiao, (displayIndex, tableRowIndex))
+                    elif i == deck['fourtiao']:
+                        scrn.blit(fourtiao, (displayIndex, tableRowIndex))
+                    elif i == deck['fivetiao']:
+                        scrn.blit(fivetiao, (displayIndex, tableRowIndex))
+                    elif i == deck['sixtiao']:
+                        scrn.blit(sixtiao, (displayIndex, tableRowIndex))
+                    elif i == deck['seventiao']:
+                        scrn.blit(seventiao, (displayIndex, tableRowIndex))
+                    elif i == deck['eighttiao']:
+                        scrn.blit(eighttiao, (displayIndex, tableRowIndex))
+                    elif i == deck['ninetiao']:
+                        scrn.blit(ninetiao, (displayIndex, tableRowIndex))
                     numberOfPieces += 1
                     numberOfRow = numberOfPieces//13
                     numberofCol = numberOfPieces%13
@@ -358,87 +358,87 @@ class Board:
                 elif i == deck['fa']:
                     self.visibleTilesSpriteLocation.append(('fa', (displayIndex, rowDisplayIndex)))
                     scrn.blit(fa, (displayIndex, rowDisplayIndex))
-                elif i == deck['oneCircle']:
-                    self.visibleTilesSpriteLocation.append(('oneCircle', (displayIndex, rowDisplayIndex)))
-                    scrn.blit(oneCircle, (displayIndex, rowDisplayIndex))
-                elif i == deck['twoCircle']:
-                    self.visibleTilesSpriteLocation.append(('twoCircle', (displayIndex, rowDisplayIndex)))
-                    scrn.blit(twoCircle, (displayIndex, rowDisplayIndex))
-                elif i == deck['threeCircle']:
-                    self.visibleTilesSpriteLocation.append(('threeCircle', (displayIndex, rowDisplayIndex)))
-                    scrn.blit(threeCircle, (displayIndex, rowDisplayIndex))
-                elif i == deck['fourCircle']:
-                    self.visibleTilesSpriteLocation.append(('fourCircle', (displayIndex, rowDisplayIndex)))
-                    scrn.blit(fourCircle, (displayIndex, rowDisplayIndex))
-                elif i == deck['fiveCircle']:
-                    self.visibleTilesSpriteLocation.append(('fiveCircle', (displayIndex, rowDisplayIndex)))
-                    scrn.blit(fiveCircle, (displayIndex, rowDisplayIndex))
-                elif i == deck['sixCircle']:
-                    self.visibleTilesSpriteLocation.append(('sixCircle', (displayIndex, rowDisplayIndex)))
-                    scrn.blit(sixCircle, (displayIndex, rowDisplayIndex))
-                elif i == deck['sevenCircle']:
-                    self.visibleTilesSpriteLocation.append(('sevenCircle', (displayIndex, rowDisplayIndex)))
-                    scrn.blit(sevenCircle, (displayIndex, rowDisplayIndex))
-                elif i == deck['eightCircle']:
-                    self.visibleTilesSpriteLocation.append(('eightCircle', (displayIndex, rowDisplayIndex)))
-                    scrn.blit(eightCircle, (displayIndex, rowDisplayIndex))
-                elif i == deck['nineCircle']:
-                    self.visibleTilesSpriteLocation.append(('nineCircle', (displayIndex, rowDisplayIndex)))
-                    scrn.blit(nineCircle, (displayIndex, rowDisplayIndex))
-                elif i == deck['oneThousand']:
-                    self.visibleTilesSpriteLocation.append(('oneThousand', (displayIndex, rowDisplayIndex)))
-                    scrn.blit(oneThousand, (displayIndex, rowDisplayIndex))
-                elif i == deck['twoThousand']:
-                    self.visibleTilesSpriteLocation.append(('twoThousand', (displayIndex, rowDisplayIndex)))
-                    scrn.blit(twoThousand, (displayIndex, rowDisplayIndex))
-                elif i == deck['threeThousand']:
-                    self.visibleTilesSpriteLocation.append(('threeThousand', (displayIndex, rowDisplayIndex)))
-                    scrn.blit(threeThousand, (displayIndex, rowDisplayIndex))
-                elif i == deck['fourThousand']:
-                    self.visibleTilesSpriteLocation.append(('fourThousand', (displayIndex, rowDisplayIndex)))
-                    scrn.blit(fourThousand, (displayIndex, rowDisplayIndex))
-                elif i == deck['fiveThousand']:
-                    self.visibleTilesSpriteLocation.append(('fiveThousand', (displayIndex, rowDisplayIndex)))
-                    scrn.blit(fiveThousand, (displayIndex, rowDisplayIndex))
-                elif i == deck['sixThousand']:
-                    self.visibleTilesSpriteLocation.append(('sixThousand', (displayIndex, rowDisplayIndex)))
-                    scrn.blit(sixThousand, (displayIndex, rowDisplayIndex))
-                elif i == deck['sevenThousand']:
-                    self.visibleTilesSpriteLocation.append(('sevenThousand', (displayIndex, rowDisplayIndex)))
-                    scrn.blit(sevenThousand, (displayIndex, rowDisplayIndex))
-                elif i == deck['eightThousand']:
-                    self.visibleTilesSpriteLocation.append(('eightThousand', (displayIndex, rowDisplayIndex)))
-                    scrn.blit(eightThousand, (displayIndex, rowDisplayIndex))
-                elif i == deck['nineThousand']:
-                    self.visibleTilesSpriteLocation.append(('nineThousand', (displayIndex, rowDisplayIndex)))
-                    scrn.blit(nineThousand, (displayIndex, rowDisplayIndex))
-                elif i == deck['oneStick']:
-                    self.visibleTilesSpriteLocation.append(('oneStick', (displayIndex, rowDisplayIndex)))
-                    scrn.blit(oneStick, (displayIndex, rowDisplayIndex))
-                elif i == deck['twoStick']:
-                    self.visibleTilesSpriteLocation.append(('twoStick', (displayIndex, rowDisplayIndex)))
-                    scrn.blit(twoStick, (displayIndex, rowDisplayIndex))
-                elif i == deck['threeStick']:
-                    self.visibleTilesSpriteLocation.append(('threeStick', (displayIndex, rowDisplayIndex)))
-                    scrn.blit(threeStick, (displayIndex, rowDisplayIndex))
-                elif i == deck['fourStick']:
-                    self.visibleTilesSpriteLocation.append(('fourStick', (displayIndex, rowDisplayIndex)))
-                    scrn.blit(fourStick, (displayIndex, rowDisplayIndex))
-                elif i == deck['fiveStick']:
-                    self.visibleTilesSpriteLocation.append(('fiveStick', (displayIndex, rowDisplayIndex)))
-                    scrn.blit(fiveStick, (displayIndex, rowDisplayIndex))
-                elif i == deck['sixStick']:
-                    self.visibleTilesSpriteLocation.append(('sixStick', (displayIndex, rowDisplayIndex)))
-                    scrn.blit(sixStick, (displayIndex, rowDisplayIndex))
-                elif i == deck['sevenStick']:
-                    self.visibleTilesSpriteLocation.append(('sevenStick', (displayIndex, rowDisplayIndex)))
-                    scrn.blit(sevenStick, (displayIndex, rowDisplayIndex))
-                elif i == deck['eightStick']:
-                    self.visibleTilesSpriteLocation.append(('eightStick', (displayIndex, rowDisplayIndex)))
-                    scrn.blit(eightStick, (displayIndex, rowDisplayIndex))
-                elif i == deck['nineStick']:
-                    self.visibleTilesSpriteLocation.append(('nineStick', (displayIndex, rowDisplayIndex)))
-                    scrn.blit(nineStick, (displayIndex, rowDisplayIndex))
+                elif i == deck['onetong']:
+                    self.visibleTilesSpriteLocation.append(('onetong', (displayIndex, rowDisplayIndex)))
+                    scrn.blit(onetong, (displayIndex, rowDisplayIndex))
+                elif i == deck['twotong']:
+                    self.visibleTilesSpriteLocation.append(('twotong', (displayIndex, rowDisplayIndex)))
+                    scrn.blit(twotong, (displayIndex, rowDisplayIndex))
+                elif i == deck['threetong']:
+                    self.visibleTilesSpriteLocation.append(('threetong', (displayIndex, rowDisplayIndex)))
+                    scrn.blit(threetong, (displayIndex, rowDisplayIndex))
+                elif i == deck['fourtong']:
+                    self.visibleTilesSpriteLocation.append(('fourtong', (displayIndex, rowDisplayIndex)))
+                    scrn.blit(fourtong, (displayIndex, rowDisplayIndex))
+                elif i == deck['fivetong']:
+                    self.visibleTilesSpriteLocation.append(('fivetong', (displayIndex, rowDisplayIndex)))
+                    scrn.blit(fivetong, (displayIndex, rowDisplayIndex))
+                elif i == deck['sixtong']:
+                    self.visibleTilesSpriteLocation.append(('sixtong', (displayIndex, rowDisplayIndex)))
+                    scrn.blit(sixtong, (displayIndex, rowDisplayIndex))
+                elif i == deck['seventong']:
+                    self.visibleTilesSpriteLocation.append(('seventong', (displayIndex, rowDisplayIndex)))
+                    scrn.blit(seventong, (displayIndex, rowDisplayIndex))
+                elif i == deck['eighttong']:
+                    self.visibleTilesSpriteLocation.append(('eighttong', (displayIndex, rowDisplayIndex)))
+                    scrn.blit(eighttong, (displayIndex, rowDisplayIndex))
+                elif i == deck['ninetong']:
+                    self.visibleTilesSpriteLocation.append(('ninetong', (displayIndex, rowDisplayIndex)))
+                    scrn.blit(ninetong, (displayIndex, rowDisplayIndex))
+                elif i == deck['onewan']:
+                    self.visibleTilesSpriteLocation.append(('onewan', (displayIndex, rowDisplayIndex)))
+                    scrn.blit(onewan, (displayIndex, rowDisplayIndex))
+                elif i == deck['twowan']:
+                    self.visibleTilesSpriteLocation.append(('twowan', (displayIndex, rowDisplayIndex)))
+                    scrn.blit(twowan, (displayIndex, rowDisplayIndex))
+                elif i == deck['threewan']:
+                    self.visibleTilesSpriteLocation.append(('threewan', (displayIndex, rowDisplayIndex)))
+                    scrn.blit(threewan, (displayIndex, rowDisplayIndex))
+                elif i == deck['fourwan']:
+                    self.visibleTilesSpriteLocation.append(('fourwan', (displayIndex, rowDisplayIndex)))
+                    scrn.blit(fourwan, (displayIndex, rowDisplayIndex))
+                elif i == deck['fivewan']:
+                    self.visibleTilesSpriteLocation.append(('fivewan', (displayIndex, rowDisplayIndex)))
+                    scrn.blit(fivewan, (displayIndex, rowDisplayIndex))
+                elif i == deck['sixwan']:
+                    self.visibleTilesSpriteLocation.append(('sixwan', (displayIndex, rowDisplayIndex)))
+                    scrn.blit(sixwan, (displayIndex, rowDisplayIndex))
+                elif i == deck['sevenwan']:
+                    self.visibleTilesSpriteLocation.append(('sevenwan', (displayIndex, rowDisplayIndex)))
+                    scrn.blit(sevenwan, (displayIndex, rowDisplayIndex))
+                elif i == deck['eightwan']:
+                    self.visibleTilesSpriteLocation.append(('eightwan', (displayIndex, rowDisplayIndex)))
+                    scrn.blit(eightwan, (displayIndex, rowDisplayIndex))
+                elif i == deck['ninewan']:
+                    self.visibleTilesSpriteLocation.append(('ninewan', (displayIndex, rowDisplayIndex)))
+                    scrn.blit(ninewan, (displayIndex, rowDisplayIndex))
+                elif i == deck['onetiao']:
+                    self.visibleTilesSpriteLocation.append(('onetiao', (displayIndex, rowDisplayIndex)))
+                    scrn.blit(onetiao, (displayIndex, rowDisplayIndex))
+                elif i == deck['twotiao']:
+                    self.visibleTilesSpriteLocation.append(('twotiao', (displayIndex, rowDisplayIndex)))
+                    scrn.blit(twotiao, (displayIndex, rowDisplayIndex))
+                elif i == deck['threetiao']:
+                    self.visibleTilesSpriteLocation.append(('threetiao', (displayIndex, rowDisplayIndex)))
+                    scrn.blit(threetiao, (displayIndex, rowDisplayIndex))
+                elif i == deck['fourtiao']:
+                    self.visibleTilesSpriteLocation.append(('fourtiao', (displayIndex, rowDisplayIndex)))
+                    scrn.blit(fourtiao, (displayIndex, rowDisplayIndex))
+                elif i == deck['fivetiao']:
+                    self.visibleTilesSpriteLocation.append(('fivetiao', (displayIndex, rowDisplayIndex)))
+                    scrn.blit(fivetiao, (displayIndex, rowDisplayIndex))
+                elif i == deck['sixtiao']:
+                    self.visibleTilesSpriteLocation.append(('sixtiao', (displayIndex, rowDisplayIndex)))
+                    scrn.blit(sixtiao, (displayIndex, rowDisplayIndex))
+                elif i == deck['seventiao']:
+                    self.visibleTilesSpriteLocation.append(('seventiao', (displayIndex, rowDisplayIndex)))
+                    scrn.blit(seventiao, (displayIndex, rowDisplayIndex))
+                elif i == deck['eighttiao']:
+                    self.visibleTilesSpriteLocation.append(('eighttiao', (displayIndex, rowDisplayIndex)))
+                    scrn.blit(eighttiao, (displayIndex, rowDisplayIndex))
+                elif i == deck['ninetiao']:
+                    self.visibleTilesSpriteLocation.append(('ninetiao', (displayIndex, rowDisplayIndex)))
+                    scrn.blit(ninetiao, (displayIndex, rowDisplayIndex))
                 displayIndex += 24
 
             pongKongRowDisplayIndex = rowDisplayIndex + 32
@@ -458,60 +458,60 @@ class Board:
                     scrn.blit(space, (pongKongDisplayIndex, pongKongRowDisplayIndex))
                 elif i == deck['fa']:
                     scrn.blit(fa, (pongKongDisplayIndex, pongKongRowDisplayIndex))
-                elif i == deck['oneCircle']:
-                    scrn.blit(oneCircle, (pongKongDisplayIndex, pongKongRowDisplayIndex))
-                elif i == deck['twoCircle']:
-                    scrn.blit(twoCircle, (pongKongDisplayIndex, pongKongRowDisplayIndex))
-                elif i == deck['threeCircle']:
-                    scrn.blit(threeCircle, (pongKongDisplayIndex, pongKongRowDisplayIndex))
-                elif i == deck['fourCircle']:
-                    scrn.blit(fourCircle, (pongKongDisplayIndex, pongKongRowDisplayIndex))
-                elif i == deck['fiveCircle']:
-                    scrn.blit(fiveCircle, (pongKongDisplayIndex, pongKongRowDisplayIndex))
-                elif i == deck['sixCircle']:
-                    scrn.blit(sixCircle, (pongKongDisplayIndex, pongKongRowDisplayIndex))
-                elif i == deck['sevenCircle']:
-                    scrn.blit(sevenCircle, (pongKongDisplayIndex, pongKongRowDisplayIndex))
-                elif i == deck['eightCircle']:
-                    scrn.blit(eightCircle, (pongKongDisplayIndex, pongKongRowDisplayIndex))
-                elif i == deck['nineCircle']:
-                    scrn.blit(nineCircle, (pongKongDisplayIndex, pongKongRowDisplayIndex))
-                elif i == deck['oneThousand']:
-                    scrn.blit(oneThousand, (pongKongDisplayIndex, pongKongRowDisplayIndex))
-                elif i == deck['twoThousand']:
-                    scrn.blit(twoThousand, (pongKongDisplayIndex, pongKongRowDisplayIndex))
-                elif i == deck['threeThousand']:
-                    scrn.blit(threeThousand, (pongKongDisplayIndex, pongKongRowDisplayIndex))
-                elif i == deck['fourThousand']:
-                    scrn.blit(fourThousand, (pongKongDisplayIndex, pongKongRowDisplayIndex))
-                elif i == deck['fiveThousand']:
-                    scrn.blit(fiveThousand, (pongKongDisplayIndex, pongKongRowDisplayIndex))
-                elif i == deck['sixThousand']:
-                    scrn.blit(sixThousand, (pongKongDisplayIndex, pongKongRowDisplayIndex))
-                elif i == deck['sevenThousand']:
-                    scrn.blit(sevenThousand, (pongKongDisplayIndex, pongKongRowDisplayIndex))
-                elif i == deck['eightThousand']:
-                    scrn.blit(eightThousand, (pongKongDisplayIndex, pongKongRowDisplayIndex))
-                elif i == deck['nineThousand']:
-                    scrn.blit(nineThousand, (pongKongDisplayIndex, pongKongRowDisplayIndex))
-                elif i == deck['oneStick']:
-                    scrn.blit(oneStick, (pongKongDisplayIndex, pongKongRowDisplayIndex))
-                elif i == deck['twoStick']:
-                    scrn.blit(twoStick, (pongKongDisplayIndex, pongKongRowDisplayIndex))
-                elif i == deck['threeStick']:
-                    scrn.blit(threeStick, (pongKongDisplayIndex, pongKongRowDisplayIndex))
-                elif i == deck['fourStick']:
-                    scrn.blit(fourStick, (pongKongDisplayIndex, pongKongRowDisplayIndex))
-                elif i == deck['fiveStick']:
-                    scrn.blit(fiveStick, (pongKongDisplayIndex, pongKongRowDisplayIndex))
-                elif i == deck['sixStick']:
-                    scrn.blit(sixStick, (pongKongDisplayIndex, pongKongRowDisplayIndex))
-                elif i == deck['sevenStick']:
-                    scrn.blit(sevenStick, (pongKongDisplayIndex, pongKongRowDisplayIndex))
-                elif i == deck['eightStick']:
-                    scrn.blit(eightStick, (pongKongDisplayIndex, pongKongRowDisplayIndex))
-                elif i == deck['nineStick']:
-                    scrn.blit(nineStick, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['onetong']:
+                    scrn.blit(onetong, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['twotong']:
+                    scrn.blit(twotong, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['threetong']:
+                    scrn.blit(threetong, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['fourtong']:
+                    scrn.blit(fourtong, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['fivetong']:
+                    scrn.blit(fivetong, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['sixtong']:
+                    scrn.blit(sixtong, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['seventong']:
+                    scrn.blit(seventong, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['eighttong']:
+                    scrn.blit(eighttong, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['ninetong']:
+                    scrn.blit(ninetong, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['onewan']:
+                    scrn.blit(onewan, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['twowan']:
+                    scrn.blit(twowan, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['threewan']:
+                    scrn.blit(threewan, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['fourwan']:
+                    scrn.blit(fourwan, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['fivewan']:
+                    scrn.blit(fivewan, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['sixwan']:
+                    scrn.blit(sixwan, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['sevenwan']:
+                    scrn.blit(sevenwan, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['eightwan']:
+                    scrn.blit(eightwan, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['ninewan']:
+                    scrn.blit(ninewan, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['onetiao']:
+                    scrn.blit(onetiao, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['twotiao']:
+                    scrn.blit(twotiao, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['threetiao']:
+                    scrn.blit(threetiao, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['fourtiao']:
+                    scrn.blit(fourtiao, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['fivetiao']:
+                    scrn.blit(fivetiao, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['sixtiao']:
+                    scrn.blit(sixtiao, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['seventiao']:
+                    scrn.blit(seventiao, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['eighttiao']:
+                    scrn.blit(eighttiao, (pongKongDisplayIndex, pongKongRowDisplayIndex))
+                elif i == deck['ninetiao']:
+                    scrn.blit(ninetiao, (pongKongDisplayIndex, pongKongRowDisplayIndex))
                 pongKongDisplayIndex += 24
 
 
@@ -645,59 +645,59 @@ class Actor:
                 displayResult += '|发|'
             elif i == deck['space']:
                 displayResult += '|白|'
-            elif i == deck['oneCircle']:
-                displayResult += '|一同|'
-            elif i == deck['twoCircle']:
-                displayResult += '|二同|'
-            elif i == deck['threeCircle']:
-                displayResult += '|三同|'
-            elif i == deck['fourCircle']:
-                displayResult += '|四同|'
-            elif i == deck['fiveCircle']:
-                displayResult += '|五同|'
-            elif i == deck['sixCircle']:
-                displayResult += '|六同|'
-            elif i == deck['sevenCircle']:
-                displayResult += '|七同|'
-            elif i == deck['eightCircle']:
-                displayResult += '|八同|'
-            elif i == deck['nineCircle']:
-                displayResult += '|九同|'
-            elif i == deck['oneThousand']:
+            elif i == deck['onetong']:
+                displayResult += '|一筒|'
+            elif i == deck['twotong']:
+                displayResult += '|二筒|'
+            elif i == deck['threetong']:
+                displayResult += '|三筒|'
+            elif i == deck['fourtong']:
+                displayResult += '|四筒|'
+            elif i == deck['fivetong']:
+                displayResult += '|五筒|'
+            elif i == deck['sixtong']:
+                displayResult += '|六筒|'
+            elif i == deck['seventong']:
+                displayResult += '|七筒|'
+            elif i == deck['eighttong']:
+                displayResult += '|八筒|'
+            elif i == deck['ninetong']:
+                displayResult += '|九筒|'
+            elif i == deck['onewan']:
                 displayResult += '|一万|'
-            elif i == deck['twoThousand']:
+            elif i == deck['twowan']:
                 displayResult += '|二万|'
-            elif i == deck['threeThousand']:
+            elif i == deck['threewan']:
                 displayResult += '|三万|'
-            elif i == deck['fourThousand']:
+            elif i == deck['fourwan']:
                 displayResult += '|四万|'
-            elif i == deck['fiveThousand']:
+            elif i == deck['fivewan']:
                 displayResult += '|五万|'
-            elif i == deck['sixThousand']:
+            elif i == deck['sixwan']:
                 displayResult += '|六万|'
-            elif i == deck['sevenThousand']:
+            elif i == deck['sevenwan']:
                 displayResult += '|七万|'
-            elif i == deck['eightThousand']:
+            elif i == deck['eightwan']:
                 displayResult += '|八万|'
-            elif i == deck['nineThousand']:
+            elif i == deck['ninewan']:
                 displayResult += '|九万|'
-            elif i == deck['oneStick']:
+            elif i == deck['onetiao']:
                 displayResult += '|一条|'
-            elif i == deck['twoStick']:
+            elif i == deck['twotiao']:
                 displayResult += '|二条|'
-            elif i == deck['threeStick']:
+            elif i == deck['threetiao']:
                 displayResult += '|三条|'
-            elif i == deck['fourStick']:
+            elif i == deck['fourtiao']:
                 displayResult += '|四条|'
-            elif i == deck['fiveStick']:
+            elif i == deck['fivetiao']:
                 displayResult += '|五条|'
-            elif i == deck['sixStick']:
+            elif i == deck['sixtiao']:
                 displayResult += '|六条|'
-            elif i == deck['sevenStick']:
+            elif i == deck['seventiao']:
                 displayResult += '|七条|'
-            elif i == deck['eightStick']:
+            elif i == deck['eighttiao']:
                 displayResult += '|八条|'
-            elif i == deck['nineStick']:
+            elif i == deck['ninetiao']:
                 displayResult += '|九条|'
         print(displayResult)
 
