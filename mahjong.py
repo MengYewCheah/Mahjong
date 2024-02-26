@@ -1,5 +1,6 @@
 import random
 import pygame
+import numpy as np
 deck = {
     'east': 1,
     'west': 2,
@@ -125,7 +126,7 @@ class Board:
                             deck['eightwan'], deck['eightwan'], deck['eightwan'], deck['eightwan'],
                             deck['ninewan'], deck['ninewan'], deck['ninewan'], deck['ninewan'],
                             ]
-        self.shuffledDecks = self.shuffleDecks()
+        self.shuffledDecks = np.random.permutation(self.organizedDecks)
         self.players = self.assignStartDecks()
         self.currentPlayer = 0
         self.pongPlayer = []
@@ -149,18 +150,12 @@ class Board:
     def assignStartDecks(self):
         players = []
         for i in range(4):
-            # If first player assign him 13 cards
-            if i == 0:
-                actorCard = self.shuffledDecks[:13]
-                players.append(Actor(actorCard, i))
-                separateList = self.shuffledDecks[14:]
-                self.shuffledDecks = separateList
-            # Other players assign 12 cards
-            else:
-                actorCard = self.shuffledDecks[:12]
-                players.append(Actor(actorCard, i))
-                separateList = self.shuffledDecks[13:]
-                self.shuffledDecks = separateList
+            actorCard = self.shuffledDecks[:12]
+            self.shuffledDecks = self.shuffledDecks[13:]
+            if i == 0: # If first player assign him 13 cards
+                actorCard.append(shuffledDecks[0])
+                self.shuffledDecks = self.shuffledDecks[1:]
+            players.append(Actor(actorCard, i))
         return players
 
     def displayBoard(self):
