@@ -129,8 +129,11 @@ class PygamesDisplayData:
             displayIndex = self.tableCol + numberofCol * 24
             tableRowIndex = self.tableRow + numberOfRow * 32
 
-    def displayPlayer(self, scrn, playerDeck):
-        rowDisplayIndex = self.startingRow
+    def displayPlayer(self, scrn, playerDeck, row=None):
+        if row is None:
+            rowDisplayIndex = self.startingRow
+        else:
+            rowDisplayIndex = row
         visibleTilesSpriteLocation = []
         displayIndex = self.startingCol
         for i in playerDeck.decks:
@@ -312,3 +315,116 @@ class PygamesDisplayData:
             elif i == Data.deck['nineStick']:
                 scrn.blit(self.nineStick, (pongKongDisplayIndex, pongKongRowDisplayIndex))
             pongKongDisplayIndex += 24
+
+    def displayPlayerActivePongKong(self, scrn, playerDeck, playerIndex, row=None):
+        if row is None:
+            rowDisplayIndex = self.startingRow
+        else:
+            rowDisplayIndex = row
+        visibleTilesSpriteLocation = []
+        displayIndex = self.startingCol
+        for i in playerDeck.decks:
+            if i == Data.deck['east']:
+                visibleTilesSpriteLocation.append((playerIndex, (displayIndex, rowDisplayIndex)))
+                scrn.blit(self.east, (displayIndex, rowDisplayIndex))
+            elif i == Data.deck['west']:
+                visibleTilesSpriteLocation.append((playerIndex, (displayIndex, rowDisplayIndex)))
+                scrn.blit(self.west, (displayIndex, rowDisplayIndex))
+            elif i == Data.deck['north']:
+                visibleTilesSpriteLocation.append((playerIndex, (displayIndex, rowDisplayIndex)))
+                scrn.blit(self.north, (displayIndex, rowDisplayIndex))
+            elif i == Data.deck['south']:
+                visibleTilesSpriteLocation.append((playerIndex, (displayIndex, rowDisplayIndex)))
+                scrn.blit(self.south, (displayIndex, rowDisplayIndex))
+            elif i == Data.deck['center']:
+                visibleTilesSpriteLocation.append((playerIndex, (displayIndex, rowDisplayIndex)))
+                scrn.blit(self.center, (displayIndex, rowDisplayIndex))
+            elif i == Data.deck['space']:
+                visibleTilesSpriteLocation.append((playerIndex, (displayIndex, rowDisplayIndex)))
+                scrn.blit(self.space, (displayIndex, rowDisplayIndex))
+            elif i == Data.deck['fa']:
+                visibleTilesSpriteLocation.append((playerIndex, (displayIndex, rowDisplayIndex)))
+                scrn.blit(self.fa, (displayIndex, rowDisplayIndex))
+            elif i == Data.deck['oneCircle']:
+                visibleTilesSpriteLocation.append((playerIndex, (displayIndex, rowDisplayIndex)))
+                scrn.blit(self.oneCircle, (displayIndex, rowDisplayIndex))
+            elif i == Data.deck['twoCircle']:
+                visibleTilesSpriteLocation.append((playerIndex, (displayIndex, rowDisplayIndex)))
+                scrn.blit(self.twoCircle, (displayIndex, rowDisplayIndex))
+            elif i == Data.deck['threeCircle']:
+                visibleTilesSpriteLocation.append((playerIndex, (displayIndex, rowDisplayIndex)))
+                scrn.blit(self.threeCircle, (displayIndex, rowDisplayIndex))
+            elif i == Data.deck['fourCircle']:
+                visibleTilesSpriteLocation.append((playerIndex, (displayIndex, rowDisplayIndex)))
+                scrn.blit(self.fourCircle, (displayIndex, rowDisplayIndex))
+            elif i == Data.deck['fiveCircle']:
+                visibleTilesSpriteLocation.append((playerIndex, (displayIndex, rowDisplayIndex)))
+                scrn.blit(self.fiveCircle, (displayIndex, rowDisplayIndex))
+            elif i == Data.deck['sixCircle']:
+                visibleTilesSpriteLocation.append((playerIndex, (displayIndex, rowDisplayIndex)))
+                scrn.blit(self.sixCircle, (displayIndex, rowDisplayIndex))
+            elif i == Data.deck['sevenCircle']:
+                visibleTilesSpriteLocation.append((playerIndex, (displayIndex, rowDisplayIndex)))
+                scrn.blit(self.sevenCircle, (displayIndex, rowDisplayIndex))
+            elif i == Data.deck['eightCircle']:
+                visibleTilesSpriteLocation.append((playerIndex, (displayIndex, rowDisplayIndex)))
+                scrn.blit(self.eightCircle, (displayIndex, rowDisplayIndex))
+            elif i == Data.deck['nineCircle']:
+                visibleTilesSpriteLocation.append((playerIndex, (displayIndex, rowDisplayIndex)))
+                scrn.blit(self.nineCircle, (displayIndex, rowDisplayIndex))
+            elif i == Data.deck['oneThousand']:
+                visibleTilesSpriteLocation.append((playerIndex, (displayIndex, rowDisplayIndex)))
+                scrn.blit(self.oneThousand, (displayIndex, rowDisplayIndex))
+            elif i == Data.deck['twoThousand']:
+                visibleTilesSpriteLocation.append((playerIndex, (displayIndex, rowDisplayIndex)))
+                scrn.blit(self.twoThousand, (displayIndex, rowDisplayIndex))
+            elif i == Data.deck['threeThousand']:
+                visibleTilesSpriteLocation.append((playerIndex, (displayIndex, rowDisplayIndex)))
+                scrn.blit(self.threeThousand, (displayIndex, rowDisplayIndex))
+            elif i == Data.deck['fourThousand']:
+                visibleTilesSpriteLocation.append((playerIndex, (displayIndex, rowDisplayIndex)))
+                scrn.blit(self.fourThousand, (displayIndex, rowDisplayIndex))
+            elif i == Data.deck['fiveThousand']:
+                visibleTilesSpriteLocation.append((playerIndex, (displayIndex, rowDisplayIndex)))
+                scrn.blit(self.fiveThousand, (displayIndex, rowDisplayIndex))
+            elif i == Data.deck['sixThousand']:
+                visibleTilesSpriteLocation.append((playerIndex, (displayIndex, rowDisplayIndex)))
+                scrn.blit(self.sixThousand, (displayIndex, rowDisplayIndex))
+            elif i == Data.deck['sevenThousand']:
+                visibleTilesSpriteLocation.append((playerIndex, (displayIndex, rowDisplayIndex)))
+                scrn.blit(self.sevenThousand, (displayIndex, rowDisplayIndex))
+            elif i == Data.deck['eightThousand']:
+                visibleTilesSpriteLocation.append((playerIndex, (displayIndex, rowDisplayIndex)))
+                scrn.blit(self.eightThousand, (displayIndex, rowDisplayIndex))
+            elif i == Data.deck['nineThousand']:
+                visibleTilesSpriteLocation.append((playerIndex, (displayIndex, rowDisplayIndex)))
+                scrn.blit(self.nineThousand, (displayIndex, rowDisplayIndex))
+            elif i == Data.deck['oneStick']:
+                visibleTilesSpriteLocation.append((playerIndex, (displayIndex, rowDisplayIndex)))
+                scrn.blit(self.oneStick, (displayIndex, rowDisplayIndex))
+            elif i == Data.deck['twoStick']:
+                visibleTilesSpriteLocation.append((playerIndex, (displayIndex, rowDisplayIndex)))
+                scrn.blit(self.twoStick, (displayIndex, rowDisplayIndex))
+            elif i == Data.deck['threeStick']:
+                visibleTilesSpriteLocation.append((playerIndex, (displayIndex, rowDisplayIndex)))
+                scrn.blit(self.threeStick, (displayIndex, rowDisplayIndex))
+            elif i == Data.deck['fourStick']:
+                visibleTilesSpriteLocation.append((playerIndex, (displayIndex, rowDisplayIndex)))
+                scrn.blit(self.fourStick, (displayIndex, rowDisplayIndex))
+            elif i == Data.deck['fiveStick']:
+                visibleTilesSpriteLocation.append((playerIndex, (displayIndex, rowDisplayIndex)))
+                scrn.blit(self.fiveStick, (displayIndex, rowDisplayIndex))
+            elif i == Data.deck['sixStick']:
+                visibleTilesSpriteLocation.append((playerIndex, (displayIndex, rowDisplayIndex)))
+                scrn.blit(self.sixStick, (displayIndex, rowDisplayIndex))
+            elif i == Data.deck['sevenStick']:
+                visibleTilesSpriteLocation.append((playerIndex, (displayIndex, rowDisplayIndex)))
+                scrn.blit(self.sevenStick, (displayIndex, rowDisplayIndex))
+            elif i == Data.deck['eightStick']:
+                visibleTilesSpriteLocation.append((playerIndex, (displayIndex, rowDisplayIndex)))
+                scrn.blit(self.eightStick, (displayIndex, rowDisplayIndex))
+            elif i == Data.deck['nineStick']:
+                visibleTilesSpriteLocation.append((playerIndex, (displayIndex, rowDisplayIndex)))
+                scrn.blit(self.nineStick, (displayIndex, rowDisplayIndex))
+            displayIndex += 24
+        return visibleTilesSpriteLocation

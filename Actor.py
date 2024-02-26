@@ -104,8 +104,8 @@ class Actor:
         for deck in self.decks:
             if deck == newDeck:
                 numberOfSimilar += 1
-                if numberOfSimilar == 2:
-                    return True
+        if numberOfSimilar == 2:
+            return True
         return False
 
     def canKong(self, newDeck):
@@ -113,8 +113,8 @@ class Actor:
         for deck in self.decks:
             if deck == newDeck:
                 numberOfSimilar += 1
-                if numberOfSimilar == 3:
-                    return True
+        if numberOfSimilar == 3:
+            return True
         return False
 
     def pong(self, newDeck):
@@ -126,7 +126,7 @@ class Actor:
         self.pongdeck.append(newDeck)
 
     def kong(self, newDeck):
-        if self.canPong(newDeck):
+        if self.canKong(newDeck):
             self.decks.remove(newDeck)
             self.decks.remove(newDeck)
             self.decks.remove(newDeck)

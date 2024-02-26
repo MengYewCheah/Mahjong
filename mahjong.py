@@ -3,15 +3,14 @@ import pygame
 from Data import DeckData
 from DisplayData import PygamesDisplayData
 from Actor import Actor
+import numpy as np
 Data = DeckData()
-startingRow = 450
-startingCol = 130
-
-tableRow = 150
-tableCol = 130
 
 textRow = 100
 textCol = 550
+
+pongorKongRow = 818
+pongorKongCol = 580
 
 white = (255, 255, 255)
 
@@ -25,6 +24,7 @@ class Board:
         self.currentPlayer = 0
         self.pongPlayer = []
         self.kongPlayer = []
+        self.skip = []
         self.numberOfTurns = 0
         self.currentPlayerDisplay = "Current Player is : " + str(self.currentPlayer + 1)
         self.lastRoundIsPong = False
@@ -92,12 +92,12 @@ class Board:
             if self.newRound:
                 print(self.newRound)
             if self.numberOfTurns != 0 and self.newRound:
-                # if self.lastRoundIsPong:
-                #     self.lastRoundIsPong = False
-                #     self.newRound = False
-                # else:
-                self.playerTakeNewCard(self.players[self.currentPlayer])
-                self.newRound = False
+                if self.lastRoundIsPong:
+                    self.lastRoundIsPong = False
+                    self.newRound = True
+                else:
+                    self.playerTakeNewCard(self.players[self.currentPlayer])
+                    self.newRound = False
             else :
                 self.newRound = False
             scrn.fill((0, 163, 108))
@@ -108,7 +108,6 @@ class Board:
             # for player in self.players:
             #     player.display()
             # Using blit to copy content from one surface to other
-            rowDisplayIndex = startingRow
             # for player in range(len(self.players)):
             #
 
@@ -117,8 +116,27 @@ class Board:
             #     displayUser = self.pongPlayer.extend(self.kongPlayer)
             #     for user in displayUser:
 
-            self.visibleTilesSpriteLocation = display.displayPlayer(scrn, self.players[self.currentPlayer])
-            display.displayPlayerPongKong(scrn, self.players[self.currentPlayer])
+            if self.pongKongAvailable():
+                print("pong kong available")
+                print("pong: ", self.pongPlayer)
+                print("kong: ", self.kongPlayer)
+                PONGKONG = font.render('PONG / KONG', True, white)
+                pngkngtextrect = PONGKONG.get_rect()
+                pngkngtextrect.center = (pongorKongCol // 2, pongorKongRow // 2)
+                scrn.blit(PONGKONG, pngkngtextrect)
+                players = self.getAllPongKongAvailablePlayer()
+                startingRow = display.startingRow
+                for player in players:
+                    self.visibleTilesSpriteLocation += display.displayPlayerActivePongKong(scrn, self.players[player], player, startingRow)
+                    startingRow += 32
+                SKIP = font.render('SKIP', True, white)
+                skiptextrect = SKIP.get_rect()
+                skiptextrect.center = (pongorKongCol // 2, startingRow + 32)
+                a = scrn.blit(SKIP, skiptextrect)
+                self.skip.append(a)
+            else:
+                self.visibleTilesSpriteLocation = display.displayPlayer(scrn, self.players[self.currentPlayer])
+                display.displayPlayerPongKong(scrn, self.players[self.currentPlayer])
 
 
             text = font.render(self.currentPlayerDisplay, True, white)
@@ -138,14 +156,31 @@ class Board:
                     status = False
 
                 if i.type == pygame.MOUSEBUTTONDOWN:
-                    pos = pygame.mouse.get_pos()
-                    (available, tile) = self.availablePieces(pos[0], pos[1])
-                    if available:
-                        if self.players[self.currentPlayer].removeDeck(self.mapDeckEnglish(tile)):
-                            self.tableCenter.append(self.mapDeckEnglish(tile))
-                            self.nextPlayer(self.mapDeckEnglish(tile))
-                            self.currentPlayerDisplay = "Current Player : " + str(self.currentPlayer + 1)
-                            self.newRound = True
+                    if self.pongKongAvailable():
+                        pos = pygame.mouse.get_pos()
+                        if self.skipClicked(pos[0], pos[1]):
+                            print("skip")
+                            self.clearPongOrKongPlayer()
+                        else:
+                            (available, player) = self.availablePongKongPieces(pos[0], pos[1])
+                            if available:
+                                pongPieces = self.tableCenter.pop(-1)
+                                if player in self.pongPlayer:
+                                    self.players[player].pong(pongPieces)
+                                elif player in self.kongPlayer:
+                                    self.players[player].kong(pongPieces)
+                                self.setCurrentPlayer(player)
+                                self.clearPongOrKongPlayer()
+                                self.lastRoundIsPong = True
+                    else :
+                        pos = pygame.mouse.get_pos()
+                        (available, tile) = self.availablePieces(pos[0], pos[1])
+                        if available:
+                            if self.players[self.currentPlayer].removeDeck(self.mapDeckEnglish(tile)):
+                                self.tableCenter.append(self.mapDeckEnglish(tile))
+                                self.nextPlayer(self.mapDeckEnglish(tile))
+                                self.currentPlayerDisplay = "Current Player : " + str(self.currentPlayer + 1)
+                                self.newRound = True
 
 
 
@@ -205,7 +240,7 @@ class Board:
     def clearPongOrKongPlayer(self):
         self.pongPlayer = []
         self.kongPlayer = []
-        self.lastRoundIsPong = True
+        self.skip = []
 
     def setCurrentPlayer(self, player):
         self.currentPlayer = player
@@ -220,4 +255,31 @@ class Board:
             if row >= curRow and row <= curRowMax and col >= curCol and col <= curColMax:
                 return (True, i[0])
         return (False, None)
+
+    def availablePongKongPieces(self, row, col):
+        for i in self.visibleTilesSpriteLocation:
+            curRow = i[1][0]
+            curCol = i[1][1]
+            curRowMax = curRow + 24
+            curColMax = curCol + 32
+            if row >= curRow and row <= curRowMax and col >= curCol and col <= curColMax:
+                return (True, i[0])
+        return (False, None)
+
+    def skipClicked(self, row, col):
+        if self.skip != [] :
+            skippedButton = self.skip[0]
+            skipRowMin = skippedButton.topleft[0]
+            skipColMin = skippedButton.topleft[1]
+            skipRowMax = skippedButton.bottomright[0]
+            skipColMax = skippedButton.bottomright[1]
+            if row >= skipRowMin and row <= skipRowMax and col >= skipColMin and col <= skipColMax:
+                return True
+        return False
+
+    def pongKongAvailable(self):
+        return self.pongPlayer != [] or self.kongPlayer != []
+
+    def getAllPongKongAvailablePlayer(self):
+        return self.pongPlayer + self.kongPlayer
 game = Board()
