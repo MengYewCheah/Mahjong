@@ -138,15 +138,6 @@ class Board:
         self.visibleTilesSpriteLocation = []
         self.displayBoard()
 
-    def shuffleDecks(self):
-        self.newDecks = []
-        deckSize = len(self.organizedDecks) - 1
-        for i in range (len(self.organizedDecks)):
-            currentDeck = random.randint(0, deckSize)
-            self.newDecks.append(self.organizedDecks.pop(currentDeck))
-            deckSize = deckSize - 1
-        return self.newDecks
-
     def assignStartDecks(self):
         players = []
         for i in range(4):
