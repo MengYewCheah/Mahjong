@@ -9,6 +9,7 @@ Feature for player to pong and kong implemented
 # DEPENDENCIES
 
 PYGAMES
+
 NUMPY
 
 # IMAGES
