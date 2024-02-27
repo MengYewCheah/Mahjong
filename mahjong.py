@@ -27,7 +27,6 @@ class Board:
         self.skip = []
         self.numberOfTurns = 0
         self.currentPlayerDisplay = "Current Player is : " + str(self.currentPlayer + 1)
-        self.lastRoundIsPong = False
         self.newRound = True
         self.currentRoundCannotShang = True
         self.visibleTilesSpriteLocation = []
@@ -94,15 +93,12 @@ class Board:
 
         status = True
         while (status):
-            if self.numberOfTurns != 0 and self.newRound and self.currentRoundCannotShang:
-                if self.lastRoundIsPong:
-                    self.lastRoundIsPong = False
-                    self.newRound = True
-                else:
-                    self.playerTakeNewCard(self.players[self.currentPlayer])
-                    self.newRound = False
+            if self.numberOfTurns != 0 and self.newRound and not self.pongKongAvailable() and not self.shangAvailable():
+                self.playerTakeNewCard(self.players[self.currentPlayer])
+                self.newRound = False
             else :
                 self.newRound = False
+
             scrn.fill((0, 163, 108))
             self.visibleTilesSpriteLocation = []
 
@@ -177,6 +173,7 @@ class Board:
                         if self.skipClicked(pos[0], pos[1]):
                             print("skip")
                             self.clearPongOrKongPlayer()
+                            self.newRound = True
                         else:
                             (available, player) = self.availablePongKongPieces(pos[0], pos[1])
                             if available:
@@ -187,23 +184,25 @@ class Board:
                                     self.players[player].kong(pongPieces)
                                 self.setCurrentPlayer(player)
                                 self.clearPongOrKongPlayer()
-                                self.lastRoundIsPong = True
+                                self.newRound = False
                     elif self.shangAvailable():
                         pos = pygame.mouse.get_pos()
                         if self.skipClicked(pos[0], pos[1]):
                             print("skip")
-                            self.clearShang(True)
+                            self.clearShang()
+                            self.newRound = True
                         else:
                             deck = self.tableCenter.pop(-1)
                             self.players[self.currentPlayer].shang(deck)
                             self.clearShang()
+                            self.newRound = False
                     else :
                         pos = pygame.mouse.get_pos()
                         (available, tile) = self.availablePieces(pos[0], pos[1])
                         if available:
                             if self.players[self.currentPlayer].removeDeck(self.mapDeckEnglish(tile)):
                                 self.tableCenter.append(self.mapDeckEnglish(tile))
-                                if (self.getNextPlayer().canShang(self.mapDeckEnglish(tile))):
+                                if self.getNextPlayer().canShang(self.mapDeckEnglish(tile)):
                                     self.currentRoundCannotShang = False
                                 self.nextPlayer(self.mapDeckEnglish(tile))
                                 self.currentPlayerDisplay = "Current Player : " + str(self.currentPlayer + 1)
@@ -270,12 +269,8 @@ class Board:
         self.kongPlayer = []
         self.skip = []
 
-    def clearShang(self, skipped=False):
-        if skipped:
-            self.currentRoundCannotShang = True
-            self.playerTakeNewCard(self.players[self.currentPlayer])
-        else:
-            self.currentRoundCannotShang = True
+    def clearShang(self):
+        self.currentRoundCannotShang = True
 
     def setCurrentPlayer(self, player):
         self.currentPlayer = player
