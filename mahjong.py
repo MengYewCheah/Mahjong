@@ -127,6 +127,7 @@ class Board:
                 startingRow = display.startingRow
                 for player in players:
                     self.visibleTilesSpriteLocation += display.displayPlayerActivePongKong(scrn, self.players[player], player, startingRow)
+                    display.displayPlayerPongKong(scrn, self.players[self.currentPlayer])
                     startingRow += 32
                 SKIP = font.render('SKIP', True, white)
                 skiptextrect = SKIP.get_rect()
