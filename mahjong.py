@@ -44,17 +44,17 @@ class Board:
     def assignStartDecks(self):
         players = []
         for i in range(4):
-            # If first player assign him 13 cards
+            # If first player assign him 14 cards
             if i == 0:
+                actorCard = self.shuffledDecks[:14]
+                players.append(Actor(actorCard, i))
+                separateList = self.shuffledDecks[15:]
+                self.shuffledDecks = separateList
+            # Other players assign 13 cards
+            else:
                 actorCard = self.shuffledDecks[:13]
                 players.append(Actor(actorCard, i))
                 separateList = self.shuffledDecks[14:]
-                self.shuffledDecks = separateList
-            # Other players assign 12 cards
-            else:
-                actorCard = self.shuffledDecks[:12]
-                players.append(Actor(actorCard, i))
-                separateList = self.shuffledDecks[13:]
                 self.shuffledDecks = separateList
         return players
 
