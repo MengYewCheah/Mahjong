@@ -29,6 +29,7 @@ class Board:
         self.currentPlayerDisplay = "Current Player is : " + str(self.currentPlayer + 1)
         self.lastRoundIsPong = False
         self.newRound = True
+        self.currentRoundCannotShang = True
         self.visibleTilesSpriteLocation = []
         self.displayBoard()
 
@@ -57,6 +58,10 @@ class Board:
                 separateList = self.shuffledDecks[13:]
                 self.shuffledDecks = separateList
         return players
+
+    def getNextPlayer(self):
+        nextPlayerIndex = (self.currentPlayer + 1) % 4
+        return self.players[nextPlayerIndex]
 
     def displayBoard(self):
         # activate the pygame library .
@@ -89,9 +94,7 @@ class Board:
 
         status = True
         while (status):
-            if self.newRound:
-                print(self.newRound)
-            if self.numberOfTurns != 0 and self.newRound:
+            if self.numberOfTurns != 0 and self.newRound and self.currentRoundCannotShang:
                 if self.lastRoundIsPong:
                     self.lastRoundIsPong = False
                     self.newRound = True
@@ -135,8 +138,21 @@ class Board:
                 a = scrn.blit(SKIP, skiptextrect)
                 self.skip.append(a)
             else:
-                self.visibleTilesSpriteLocation = display.displayPlayer(scrn, self.players[self.currentPlayer])
-                display.displayPlayerPongKong(scrn, self.players[self.currentPlayer])
+                if self.shangAvailable():
+                    EAT = font.render('EAT', True, white)
+                    eattextrect = EAT.get_rect()
+                    eattextrect.center = (pongorKongCol // 2, pongorKongRow // 2)
+                    scrn.blit(EAT, eattextrect)
+                    display.displayPlayer(scrn, self.players[self.currentPlayer])
+                    display.displayPlayerPongKong(scrn, self.players[self.currentPlayer])
+                    SKIP = font.render('SKIP', True, white)
+                    skiptextrect = SKIP.get_rect()
+                    skiptextrect.center = (pongorKongCol // 2, display.startingRow + 64)
+                    a = scrn.blit(SKIP, skiptextrect)
+                    self.skip.append(a)
+                else :
+                    self.visibleTilesSpriteLocation = display.displayPlayer(scrn, self.players[self.currentPlayer])
+                    display.displayPlayerPongKong(scrn, self.players[self.currentPlayer])
 
 
             text = font.render(self.currentPlayerDisplay, True, white)
@@ -172,12 +188,23 @@ class Board:
                                 self.setCurrentPlayer(player)
                                 self.clearPongOrKongPlayer()
                                 self.lastRoundIsPong = True
+                    elif self.shangAvailable():
+                        pos = pygame.mouse.get_pos()
+                        if self.skipClicked(pos[0], pos[1]):
+                            print("skip")
+                            self.clearShang(True)
+                        else:
+                            deck = self.tableCenter.pop(-1)
+                            self.players[self.currentPlayer].shang(deck)
+                            self.clearShang()
                     else :
                         pos = pygame.mouse.get_pos()
                         (available, tile) = self.availablePieces(pos[0], pos[1])
                         if available:
                             if self.players[self.currentPlayer].removeDeck(self.mapDeckEnglish(tile)):
                                 self.tableCenter.append(self.mapDeckEnglish(tile))
+                                if (self.getNextPlayer().canShang(self.mapDeckEnglish(tile))):
+                                    self.currentRoundCannotShang = False
                                 self.nextPlayer(self.mapDeckEnglish(tile))
                                 self.currentPlayerDisplay = "Current Player : " + str(self.currentPlayer + 1)
                                 self.newRound = True
@@ -223,10 +250,11 @@ class Board:
             self.numberOfTurns += 1
         if newDeck is not None:
             for player in range(len(self.players)):
-                if self.players[player].canPong(newDeck):
-                    self.pongPlayer.append(player)
-                elif self.players[player].canKong(newDeck):
-                    self.kongPlayer.append(player)
+                if player != (self.currentPlayer-1)%4:
+                    if self.players[player].canPong(newDeck):
+                        self.pongPlayer.append(player)
+                    elif self.players[player].canKong(newDeck):
+                        self.kongPlayer.append(player)
 
     def mapDeck(self, deckName):
         return Data.deckChinese[deckName]
@@ -241,6 +269,13 @@ class Board:
         self.pongPlayer = []
         self.kongPlayer = []
         self.skip = []
+
+    def clearShang(self, skipped=False):
+        if skipped:
+            self.currentRoundCannotShang = True
+            self.playerTakeNewCard(self.players[self.currentPlayer])
+        else:
+            self.currentRoundCannotShang = True
 
     def setCurrentPlayer(self, player):
         self.currentPlayer = player
@@ -279,6 +314,9 @@ class Board:
 
     def pongKongAvailable(self):
         return self.pongPlayer != [] or self.kongPlayer != []
+
+    def shangAvailable(self):
+        return len(self.tableCenter) >= 1 and (self.players[self.currentPlayer].canShang(self.tableCenter[-1])) and self.currentRoundCannotShang == False
 
     def getAllPongKongAvailablePlayer(self):
         return self.pongPlayer + self.kongPlayer

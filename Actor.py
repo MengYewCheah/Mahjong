@@ -117,6 +117,16 @@ class Actor:
             return True
         return False
 
+    def canShang(self, newDeck):
+        for deck in range(len(self.decks)):
+            if self.decks[deck] == newDeck + 1 and len(self.decks) - 1 != deck and self.decks[deck+1] == newDeck + 2:
+                return (True, "Front")
+            elif self.decks[deck] == newDeck - 1 and len(self.decks) - 1 != deck and self.decks[deck+1] == newDeck + 1:
+                return (True, "Medium")
+            elif self.decks[deck] == newDeck - 2 and len(self.decks) - 1 != deck and self.decks[deck+1] == newDeck - 1:
+                return (True, "Last")
+        return False
+
     def pong(self, newDeck):
         if self.canPong(newDeck):
             self.decks.remove(newDeck)
@@ -134,3 +144,27 @@ class Actor:
         self.pongdeck.append(newDeck)
         self.pongdeck.append(newDeck)
         self.pongdeck.append(newDeck)
+
+    def shang(self, newDeck):
+        (canShang, position) = self.canShang(newDeck)
+        if canShang:
+            if position == "Front":
+                self.decks.remove(newDeck + 1)
+                self.decks.remove(newDeck + 2)
+                self.pongdeck.append(newDeck)
+                self.pongdeck.append(newDeck+1)
+                self.pongdeck.append(newDeck+2)
+            elif position == "Medium":
+                self.decks.remove(newDeck - 1)
+                self.decks.remove(newDeck + 1)
+                self.pongdeck.append(newDeck - 1)
+                self.pongdeck.append(newDeck)
+                self.pongdeck.append(newDeck+1)
+            elif position == "Last":
+                self.decks.remove(newDeck - 1)
+                self.decks.remove(newDeck - 2)
+                self.pongdeck.append(newDeck - 2)
+                self.pongdeck.append(newDeck - 1)
+                self.pongdeck.append(newDeck)
+
+
