@@ -183,6 +183,7 @@ class Board:
                                     self.players[player].pong(pongPieces)
                                 elif player in self.kongPlayer:
                                     self.players[player].kong(pongPieces)
+                                    self.playerTakeNewCard(self.players[self.currentPlayer])
                                 self.setCurrentPlayer(player)
                                 self.clearPongOrKongPlayer()
                                 self.newRound = False
