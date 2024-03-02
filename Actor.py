@@ -127,6 +127,62 @@ class Actor:
                 return (True, "Last")
         return False
 
+    def canHu(self, newDeck=None):
+        completeNewDeck = self.decks[:]
+        if newDeck is not None:
+            completeNewDeck.append(newDeck)
+        completeNewDeck.sort()
+        eye = self.findEye(completeNewDeck)
+        if eye is None:
+            print("Cannot HU")
+            return False
+        completeNewDeck.remove(eye)
+        completeNewDeck.remove(eye)
+
+        if len(completeNewDeck) % 3 != 0:
+            print("Cannot HU because not enough pieces")
+            return False
+
+        for i in range(len(completeNewDeck)//3):
+            startingIndex = i*3
+            sub = completeNewDeck[startingIndex: startingIndex+3]
+            print(self.isSuitOfThreeSeries(sub), self.isSuitOfThreeSame(sub), sub)
+            if not (self.isSuitOfThreeSeries(sub) or self.isSuitOfThreeSame(sub)):
+                print("Cannot HU because not suit of three")
+                return False
+        print(completeNewDeck)
+        print("Can HU")
+        return True
+
+    def isSuitOfThreeSeries(self, list):
+        return list[0] + 1 == list[1] and list[0] + 2 == list[2]
+
+    def isSuitOfThreeSame(self, list):
+        return list[0] == list[1] and list[0] == list[2]
+
+    def findEye(self, list):
+        newList = list[:]
+        newList.sort()
+        uniqeList = self.findUnique(newList)
+        for i in uniqeList:
+            if self.countRepeated(list, i) >= 2:
+                return i
+        return None
+
+    def countRepeated(self, list, item):
+        count = 0
+        for i in list:
+            if i == item:
+                count += 1
+        return count
+
+    def findUnique(self, list):
+        uniqueList = []
+        for i in range(len(list)):
+            if list[i] not in uniqueList:
+                uniqueList.append(list[i])
+        return uniqueList
+
     def pong(self, newDeck):
         if self.canPong(newDeck):
             self.decks.remove(newDeck)
