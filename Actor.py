@@ -145,7 +145,10 @@ class Actor:
             completeNewDeck.remove(twoeye)
             completeNewDeck.remove(twoeye)
 
-        if len(completeNewDeck) % 3 != 0:
+        if len(completeNewDeck) == 0:
+            return True
+
+        elif len(completeNewDeck) % 3 != 0:
             print("Cannot HU because not enough pieces")
             return False
 

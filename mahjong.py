@@ -118,7 +118,7 @@ class Board:
                     playerThatCanHu = self.getPlayerCanHu()
                     print(playerThatCanHu, self.players[playerThatCanHu].decks)
                     if playerThatCanHu is not None :
-                        HU = font.render('HU', True, white)
+                        HU = font.render('HU PLAYER : ' + str(self.currentPlayer + 1), True, white)
                         hutextrect = HU.get_rect()
                         hutextrect.center = (pongorKongCol // 2, pongorKongRow // 2)
                         hu = scrn.blit(HU, hutextrect)
