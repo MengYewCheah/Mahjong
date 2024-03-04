@@ -26,9 +26,14 @@ class Board:
         self.pongPlayer = []
         self.kongPlayer = []
         self.skip = []
+        self.start = []
+        self.shang = []
+        self.pongKong = []
+        self.hu = []
         self.numberOfTurns = 0
         self.currentPlayerDisplay = "Current Player is : " + str(self.currentPlayer + 1)
         self.newRound = True
+        self.gameOn = False
         self.currentRoundCannotShang = True
         self.visibleTilesSpriteLocation = []
         self.displayBoard()
@@ -77,6 +82,7 @@ class Board:
         pygame.display.set_caption('MahJong')
 
         font = pygame.font.Font('freesansbold.ttf', 32)
+        smallerfont = pygame.font.Font('freesansbold.ttf', 16)
 
         # create a text surface object,
         # on which text is drawn on it.
@@ -91,91 +97,88 @@ class Board:
 
         # create a surface object, image is drawn on it.
         display = PygamesDisplayData(pygame)
+        scrn.fill((0, 163, 108))
 
         status = True
         while (status):
-            if self.numberOfTurns != 0 and self.newRound and not self.pongKongAvailable() and not self.shangAvailable():
-                self.playerTakeNewCard(self.players[self.currentPlayer])
-                self.players[self.currentPlayer].canHu()
-                self.newRound = False
-                self.numberOfTurns += 1
-            else :
-                self.newRound = False
+            if self.gameOn:
+                if self.numberOfTurns != 0 and self.newRound and not self.pongKongAvailable() and not self.shangAvailable():
+                    self.playerTakeNewCard(self.players[self.currentPlayer])
+                    self.newRound = False
+                    self.numberOfTurns += 1
+                else :
+                    self.newRound = False
 
-            scrn.fill((0, 163, 108))
-            self.visibleTilesSpriteLocation = []
+                scrn.fill((0, 163, 108))
+                self.visibleTilesSpriteLocation = []
 
-            display.displaytable(scrn, self.tableCenter)
+                display.displaytable(scrn, self.tableCenter)
 
-            # for player in self.players:
-            #     player.display()
-            # Using blit to copy content from one surface to other
-            # for player in range(len(self.players)):
-            #
-
-            # if player can pong / kong then display those player
-            # if self.pongPlayer != [] or self.kongPlayer != []:
-            #     displayUser = self.pongPlayer.extend(self.kongPlayer)
-            #     for user in displayUser:
-
-            if self.huAvailable():
-                playerThatCanHu = self.getPlayerCanHu()
-                print(playerThatCanHu, self.players[playerThatCanHu].decks)
-                if playerThatCanHu is not None :
-                    HU = font.render('HU', True, white)
-                    hutextrect = HU.get_rect()
-                    hutextrect.center = (pongorKongCol // 2, pongorKongRow // 2)
-                    scrn.blit(HU, hutextrect)
-                    display.displayPlayer(scrn, self.players[playerThatCanHu])
-                    display.displayPlayerPongKong(scrn, self.players[playerThatCanHu])
+                if self.huAvailable():
+                    playerThatCanHu = self.getPlayerCanHu()
+                    print(playerThatCanHu, self.players[playerThatCanHu].decks)
+                    if playerThatCanHu is not None :
+                        HU = font.render('HU', True, white)
+                        hutextrect = HU.get_rect()
+                        hutextrect.center = (pongorKongCol // 2, pongorKongRow // 2)
+                        hu = scrn.blit(HU, hutextrect)
+                        self.hu.append(hu)
+                        display.displayPlayer(scrn, self.players[playerThatCanHu])
+                        display.displayPlayerPongKong(scrn, self.players[playerThatCanHu])
+                        SKIP = font.render('SKIP', True, white)
+                        skiptextrect = SKIP.get_rect()
+                        skiptextrect.center = (pongorKongCol // 2, startingRow + 64)
+                        a = scrn.blit(SKIP, skiptextrect)
+                        self.skip.append(a)
+                elif self.pongKongAvailable():
+                    print("pong kong available")
+                    print("pong: ", self.pongPlayer)
+                    print("kong: ", self.kongPlayer)
+                    players = self.pongPlayer + self.kongPlayer
+                    PONGKONG = font.render('PONG / KONG PLAYER : ' + str(players[0]+1), True, white)
+                    pngkngtextrect = PONGKONG.get_rect()
+                    pngkngtextrect.center = (pongorKongCol // 2, pongorKongRow // 2)
+                    pongKong = scrn.blit(PONGKONG, pngkngtextrect)
+                    self.pongKong.append(pongKong)
+                    players = self.getAllPongKongAvailablePlayer()
+                    startingRow = display.startingRow
+                    for player in players:
+                        self.visibleTilesSpriteLocation += display.displayPlayerActivePongKong(scrn, self.players[player], player, startingRow)
+                        display.displayPlayerPongKong(scrn, self.players[player])
+                        startingRow += 32
                     SKIP = font.render('SKIP', True, white)
                     skiptextrect = SKIP.get_rect()
                     skiptextrect.center = (pongorKongCol // 2, startingRow + 64)
                     a = scrn.blit(SKIP, skiptextrect)
                     self.skip.append(a)
-            elif self.pongKongAvailable():
-                print("pong kong available")
-                print("pong: ", self.pongPlayer)
-                print("kong: ", self.kongPlayer)
-                PONGKONG = font.render('PONG / KONG', True, white)
-                pngkngtextrect = PONGKONG.get_rect()
-                pngkngtextrect.center = (pongorKongCol // 2, pongorKongRow // 2)
-                scrn.blit(PONGKONG, pngkngtextrect)
-                players = self.getAllPongKongAvailablePlayer()
-                startingRow = display.startingRow
-                for player in players:
-                    self.visibleTilesSpriteLocation += display.displayPlayerActivePongKong(scrn, self.players[player], player, startingRow)
-                    display.displayPlayerPongKong(scrn, self.players[player])
-                    startingRow += 32
-                SKIP = font.render('SKIP', True, white)
-                skiptextrect = SKIP.get_rect()
-                skiptextrect.center = (pongorKongCol // 2, startingRow + 64)
-                a = scrn.blit(SKIP, skiptextrect)
-                self.skip.append(a)
+                else:
+                    if self.shangAvailable():
+                        EAT = font.render('EAT', True, white)
+                        eattextrect = EAT.get_rect()
+                        eattextrect.center = (pongorKongCol // 2, pongorKongRow // 2)
+                        eat = scrn.blit(EAT, eattextrect)
+                        self.shang.append(eat)
+                        display.displayPlayer(scrn, self.players[self.currentPlayer])
+                        display.displayPlayerPongKong(scrn, self.players[self.currentPlayer])
+                        SKIP = font.render('SKIP', True, white)
+                        skiptextrect = SKIP.get_rect()
+                        skiptextrect.center = (pongorKongCol // 2, display.startingRow + 96)
+                        a = scrn.blit(SKIP, skiptextrect)
+                        self.skip.append(a)
+                    else :
+                        self.visibleTilesSpriteLocation = display.displayPlayer(scrn, self.players[self.currentPlayer])
+                        display.displayPlayerPongKong(scrn, self.players[self.currentPlayer])
+
+
+                text = font.render(self.currentPlayerDisplay, True, white)
+                textRect = text.get_rect()
+                textRect.center = (textCol // 2, textRow // 2)
+                scrn.blit(text, textRect)
+                # paint screen one time
+                pygame.display.flip()
             else:
-                if self.shangAvailable():
-                    EAT = font.render('EAT', True, white)
-                    eattextrect = EAT.get_rect()
-                    eattextrect.center = (pongorKongCol // 2, pongorKongRow // 2)
-                    scrn.blit(EAT, eattextrect)
-                    display.displayPlayer(scrn, self.players[self.currentPlayer])
-                    display.displayPlayerPongKong(scrn, self.players[self.currentPlayer])
-                    SKIP = font.render('SKIP', True, white)
-                    skiptextrect = SKIP.get_rect()
-                    skiptextrect.center = (pongorKongCol // 2, display.startingRow + 64)
-                    a = scrn.blit(SKIP, skiptextrect)
-                    self.skip.append(a)
-                else :
-                    self.visibleTilesSpriteLocation = display.displayPlayer(scrn, self.players[self.currentPlayer])
-                    display.displayPlayerPongKong(scrn, self.players[self.currentPlayer])
+                self.start.append(display.displayNewGameScreen(scrn))
 
-
-            text = font.render(self.currentPlayerDisplay, True, white)
-            textRect = text.get_rect()
-            textRect.center = (textCol // 2, textRow // 2)
-            scrn.blit(text, textRect)
-            # paint screen one time
-            pygame.display.flip()
             # iterate over the list of Event objects
             # that was returned by pygame.event.get() method.
             for i in pygame.event.get():
@@ -185,17 +188,23 @@ class Board:
                 # and program both.
                 if i.type == pygame.QUIT:
                     status = False
+                if self.gameOn:
+                    if i.type == pygame.MOUSEBUTTONDOWN:
+                        if self.huAvailable():
+                            print("Waiting for HU")
+                            # pos = pygame.mouse.get_pos()
+                            # if self.huClicked(pos[0], pos[1]):
+                            #     print("hu")
 
-                if i.type == pygame.MOUSEBUTTONDOWN:
-                    if self.pongKongAvailable():
-                        pos = pygame.mouse.get_pos()
-                        if self.skipClicked(pos[0], pos[1]):
-                            print("skip")
-                            self.clearPongOrKongPlayer()
-                            self.newRound = True
-                        else:
-                            (available, player) = self.availablePongKongPieces(pos[0], pos[1])
-                            if available:
+                        elif self.pongKongAvailable():
+                            pos = pygame.mouse.get_pos()
+                            if self.skipClicked(pos[0], pos[1]):
+                                print("skip")
+                                self.clearPongOrKongPlayer()
+                                self.newRound = True
+                            elif self.pongKongClicked(pos[0], pos[1]):
+                                players = self.pongPlayer + self.kongPlayer
+                                player = players[0]
                                 pongPieces = self.tableCenter.pop(-1)
                                 if player in self.pongPlayer:
                                     self.players[player].pong(pongPieces)
@@ -206,64 +215,35 @@ class Board:
                                 self.clearPongOrKongPlayer()
                                 # If you have pong or kong, you cannot shang anymore
                                 self.clearShang()
-                                # Check if player can HU after pong kong
-                                self.players[self.currentPlayer].canHu()
                                 self.newRound = False
-                    elif self.shangAvailable():
-                        pos = pygame.mouse.get_pos()
-                        if self.skipClicked(pos[0], pos[1]):
-                            print("skip")
-                            self.clearShang()
-                            self.newRound = True
-                        else:
-                            deck = self.tableCenter.pop(-1)
-                            self.players[self.currentPlayer].shang(deck)
-                            # Check if player can HU after Shang
-                            self.players[self.currentPlayer].canHu()
-                            self.clearShang()
-                            self.newRound = False
-                    else :
-                        pos = pygame.mouse.get_pos()
-                        (available, tile) = self.availablePieces(pos[0], pos[1])
-                        if available:
-                            if self.players[self.currentPlayer].removeDeck(self.mapDeckEnglish(tile)):
-                                self.tableCenter.append(self.mapDeckEnglish(tile))
-                                if self.getNextPlayer().canShang(self.mapDeckEnglish(tile)):
-                                    self.currentRoundCannotShang = False
-                                self.nextPlayer(self.mapDeckEnglish(tile))
-                                self.currentPlayerDisplay = "Current Player : " + str(self.currentPlayer + 1)
+                        elif self.shangAvailable():
+                            pos = pygame.mouse.get_pos()
+                            if self.skipClicked(pos[0], pos[1]):
+                                print("skip")
+                                self.clearShang()
                                 self.newRound = True
-
-
-
-            # print(self.currentPlayerDisplay)
-            # while True:
-            #     print("Player that can Pong : ", self.pongPlayer)
-            #     print("Player that can Kong : ", self.kongPlayer)
-            #     if len(self.pongPlayer) != 0:
-            #         print("PONG available player : ", self.pongPlayer)
-            #         a = input("Please select a valid player to Pong : ")
-            #         print(a, int(a) in self.pongPlayer)
-            #         pongPieces = self.tableCenter.pop(-1)
-            #         if int(a) in self.pongPlayer or int(a) in self.kongPlayer:
-            #             player = self.players[int(a)]
-            #             if int(a) in self.pongPlayer:
-            #                 player.pong(pongPieces)
-            #             elif int(a) in self.kongPlayer:
-            #                 player.kong(pongPieces)
-            #             self.setCurrentPlayer(int(a))
-            #             self.clearPongOrKongPlayer()
-            #             break
-            #     else:
-            #         a = input("Please play ? ")
-            #         print(a, self.mapDeck(a))
-            #         if self.players[self.currentPlayer].removeDeck(self.mapDeck(a)):
-            #             self.tableCenter.append(self.mapDeck(a))
-            #             self.nextPlayer(self.mapDeck(a))
-            #             self.currentPlayerDisplay = "Current Player : " + str(self.currentPlayer + 1)
-            #             pygame.display.flip()
-            #             break
-        # deactivates the pygame library
+                            elif self.shangClicked(pos[0], pos[1]):
+                                deck = self.tableCenter.pop(-1)
+                                self.players[self.currentPlayer].shang(deck)
+                                self.clearShang()
+                                self.newRound = False
+                        else :
+                            pos = pygame.mouse.get_pos()
+                            (available, tile) = self.availablePieces(pos[0], pos[1])
+                            if available:
+                                if self.players[self.currentPlayer].removeDeck(self.mapDeckEnglish(tile)):
+                                    self.tableCenter.append(self.mapDeckEnglish(tile))
+                                    if self.getNextPlayer().canShang(self.mapDeckEnglish(tile)):
+                                        self.currentRoundCannotShang = False
+                                    self.nextPlayer(self.mapDeckEnglish(tile))
+                                    self.currentPlayerDisplay = "Current Player : " + str(self.currentPlayer + 1)
+                                    self.newRound = True
+                else:
+                    if i.type == pygame.MOUSEBUTTONDOWN:
+                        pos = pygame.mouse.get_pos()
+                        if self.startClicked(pos[0], pos[1]):
+                            self.gameOn = True
+                            self.start = []
         pygame.quit()
 
     def nextPlayer(self, newDeck, pongKongPlayer=None):
@@ -299,6 +279,9 @@ class Board:
 
     def clearShang(self):
         self.currentRoundCannotShang = True
+        self.shang = []
+        self.skip = []
+
 
     def setCurrentPlayer(self, player):
         self.currentPlayer = player
@@ -323,16 +306,38 @@ class Board:
             if row >= curRow and row <= curRowMax and col >= curCol and col <= curColMax:
                 return (True, i[0])
         return (False, None)
+    def pongKongClicked(self, row, col):
+        if self.pongKong != [] :
+            return self.buttonClicked(self.pongKong[0], row, col)
+        return False
 
     def skipClicked(self, row, col):
         if self.skip != [] :
-            skippedButton = self.skip[0]
-            skipRowMin = skippedButton.topleft[0]
-            skipColMin = skippedButton.topleft[1]
-            skipRowMax = skippedButton.bottomright[0]
-            skipColMax = skippedButton.bottomright[1]
-            if row >= skipRowMin and row <= skipRowMax and col >= skipColMin and col <= skipColMax:
-                return True
+            return self.buttonClicked(self.skip[0], row, col)
+        return False
+
+    def shangClicked(self, row, col):
+        if self.shang != [] :
+            return self.buttonClicked(self.shang[0], row, col)
+        return False
+
+    def startClicked(self, row, col):
+        if self.start != [] :
+            return self.buttonClicked(self.start[0], row, col)
+        return False
+
+    def huClicked(self, row, col):
+        if self.hu != [] :
+            return self.buttonClicked(self.hu[0], row, col)
+        return False
+
+    def buttonClicked(self, button, mouseRow, mouseCol):
+        startRowMin = button.topleft[0]
+        startColMin = button.topleft[1]
+        startRowMax = button.bottomright[0]
+        startColMax = button.bottomright[1]
+        if mouseRow >= startRowMin and mouseRow <= startRowMax and mouseCol >= startColMin and mouseCol <= startColMax:
+            return True
         return False
 
     def pongKongAvailable(self):

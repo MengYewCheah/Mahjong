@@ -132,12 +132,18 @@ class Actor:
         if newDeck is not None:
             completeNewDeck.append(newDeck)
         completeNewDeck.sort()
-        eye = self.findEye(completeNewDeck)
-        if eye is None:
-            print("Cannot HU")
-            return False
-        completeNewDeck.remove(eye)
-        completeNewDeck.remove(eye)
+        twoeye = self.find2Eye(completeNewDeck)
+        if twoeye is None:
+            threeeye = self.find3Eye(completeNewDeck)
+            if threeeye is None:
+                print("Cannot HU")
+                return False
+            else:
+                completeNewDeck.remove(threeeye)
+                completeNewDeck.remove(threeeye)
+        else:
+            completeNewDeck.remove(twoeye)
+            completeNewDeck.remove(twoeye)
 
         if len(completeNewDeck) % 3 != 0:
             print("Cannot HU because not enough pieces")
@@ -160,12 +166,21 @@ class Actor:
     def isSuitOfThreeSame(self, list):
         return list[0] == list[1] and list[0] == list[2]
 
-    def findEye(self, list):
+    def find2Eye(self, list):
         newList = list[:]
         newList.sort()
         uniqeList = self.findUnique(newList)
         for i in uniqeList:
-            if self.countRepeated(list, i) >= 2:
+            if self.countRepeated(list, i) == 2:
+                return i
+        return None
+
+    def find3Eye(self, list):
+        newList = list[:]
+        newList.sort()
+        uniqeList = self.findUnique(newList)
+        for i in uniqeList:
+            if self.countRepeated(list, i) == 3:
                 return i
         return None
 

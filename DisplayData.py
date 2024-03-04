@@ -1,4 +1,5 @@
 from Data import DeckData
+import pygame
 
 Data = DeckData()
 class PygamesDisplayData:
@@ -428,3 +429,45 @@ class PygamesDisplayData:
                 scrn.blit(self.nineStick, (displayIndex, rowDisplayIndex))
             displayIndex += 24
         return visibleTilesSpriteLocation
+
+    def displayNewGameScreen(self, scrn):
+        font = pygame.font.Font('freesansbold.ttf', 32)
+        smallerfont = pygame.font.Font('freesansbold.ttf', 16)
+        white = (255, 255, 255)
+        scrn.fill((0, 163, 108))
+        text = font.render('MAHJONG', True, white)
+        textRect = text.get_rect()
+        textRect.center = (580 // 2, 500 // 2)
+        scrn.blit(text, textRect)
+
+        text = smallerfont.render('New Game', True, white)
+        textRect = text.get_rect()
+        textRect.center = (580 // 2, 600 // 2)
+        start = scrn.blit(text, textRect)
+
+        scrn.blit(self.fa, (150, 180))
+        scrn.blit(self.center, (182, 180))
+        scrn.blit(self.east, (214, 180))
+
+        scrn.blit(self.fa, (246, 180))
+        scrn.blit(self.center, (278, 180))
+        scrn.blit(self.east, (310, 180))
+
+        scrn.blit(self.fa, (342, 180))
+        scrn.blit(self.center, (374, 180))
+        scrn.blit(self.east, (406, 180))
+
+        #-----------------------------------------
+        scrn.blit(self.fa, (150, 324))
+        scrn.blit(self.center, (182, 324))
+        scrn.blit(self.east, (214, 324))
+
+        scrn.blit(self.fa, (246, 324))
+        scrn.blit(self.center, (278, 324))
+        scrn.blit(self.east, (310, 324))
+
+        scrn.blit(self.fa, (342, 324))
+        scrn.blit(self.center, (374, 324))
+        scrn.blit(self.east, (406, 324))
+        pygame.display.flip()
+        return start
