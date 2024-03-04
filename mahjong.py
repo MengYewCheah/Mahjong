@@ -114,11 +114,19 @@ class Board:
 
                 display.displaytable(scrn, self.tableCenter)
 
-                if self.huAvailable():
+                if self.winAvailable():
+                    playerThatWin = self.getWinPlayer()
+                    WIN = font.render('WIN PLAYER : ' + str(self.currentPlayer + 1), True, white)
+                    wintextrect = WIN.get_rect()
+                    wintextrect.center = (pongorKongCol // 2, pongorKongRow // 2)
+                    scrn.blit(WIN, wintextrect)
+                    display.displayPlayer(scrn, self.players[playerThatWin])
+                    display.displayPlayerPongKong(scrn, self.players[playerThatWin])
+                elif self.huAvailable():
                     playerThatCanHu = self.getPlayerCanHu()
                     print(playerThatCanHu, self.players[playerThatCanHu].decks)
                     if playerThatCanHu is not None :
-                        HU = font.render('HU PLAYER : ' + str(self.currentPlayer + 1), True, white)
+                        HU = font.render('HU PLAYER : ' + str(playerThatCanHu + 1), True, white)
                         hutextrect = HU.get_rect()
                         hutextrect.center = (pongorKongCol // 2, pongorKongRow // 2)
                         hu = scrn.blit(HU, hutextrect)
@@ -190,12 +198,25 @@ class Board:
                     status = False
                 if self.gameOn:
                     if i.type == pygame.MOUSEBUTTONDOWN:
-                        if self.huAvailable():
-                            print("Waiting for HU")
-                            # pos = pygame.mouse.get_pos()
-                            # if self.huClicked(pos[0], pos[1]):
-                            #     print("hu")
-
+                        if self.winAvailable():
+                            print("SLEEP")
+                        elif self.huAvailable():
+                            pos = pygame.mouse.get_pos()
+                            playerThatCanHu = self.getPlayerCanHu()
+                            if self.skipClicked(pos[0], pos[1]):
+                                self.players[playerThatCanHu].setPlayerWantToSkipHu(True)
+                                print("skip")
+                                self.newRound = True
+                            else:
+                                print("Waiting for HU")
+                                pos = pygame.mouse.get_pos()
+                                huPieces = self.tableCenter.pop(-1)
+                                if self.huClicked(pos[0], pos[1]):
+                                    if self.players[playerThatCanHu].canHu():
+                                        self.players[playerThatCanHu].playerWon()
+                                    else:
+                                        self.players[playerThatCanHu].hu(huPieces)
+                                        self.players[playerThatCanHu].playerWon()
                         elif self.pongKongAvailable():
                             pos = pygame.mouse.get_pos()
                             if self.skipClicked(pos[0], pos[1]):
@@ -237,6 +258,7 @@ class Board:
                                         self.currentRoundCannotShang = False
                                     self.nextPlayer(self.mapDeckEnglish(tile))
                                     self.currentPlayerDisplay = "Current Player : " + str(self.currentPlayer + 1)
+                                    self.clearHu()
                                     self.newRound = True
                 else:
                     if i.type == pygame.MOUSEBUTTONDOWN:
@@ -282,6 +304,9 @@ class Board:
         self.shang = []
         self.skip = []
 
+    def clearHu(self):
+        for player in self.players:
+            player.setPlayerWantToSkipHu(False)
 
     def setCurrentPlayer(self, player):
         self.currentPlayer = player
@@ -306,6 +331,7 @@ class Board:
             if row >= curRow and row <= curRowMax and col >= curCol and col <= curColMax:
                 return (True, i[0])
         return (False, None)
+
     def pongKongClicked(self, row, col):
         if self.pongKong != [] :
             return self.buttonClicked(self.pongKong[0], row, col)
@@ -345,17 +371,29 @@ class Board:
 
     def huAvailable(self):
         for player in range(len(self.players)):
-            if self.players[player].canHu():
+            if self.players[player].canHu() and not self.players[player].playerWantToSkipHu:
                 return True
-            if len(self.tableCenter) > 0 and self.players[player].canHu(self.tableCenter[-1]):
+            if len(self.tableCenter) > 0 and self.players[player].canHu(self.tableCenter[-1]) and not self.players[player].playerWantToSkipHu:
                 return True
         return False
 
+    def winAvailable(self):
+        for player in range(len(self.players)):
+            if self.players[player].win:
+                return True
+        return False
+
+    def getWinPlayer(self):
+        for player in range(len(self.players)):
+            if self.players[player].win:
+                return player
+        return None
+
     def getPlayerCanHu(self):
         for player in range(len(self.players)):
-            if self.players[player].canHu():
+            if self.players[player].canHu() and not self.players[player].playerWantToSkipHu:
                 return player
-            if len(self.tableCenter) > 0 and self.players[player].canHu(self.tableCenter[-1]):
+            if len(self.tableCenter) > 0 and self.players[player].canHu(self.tableCenter[-1]) and not self.players[player].playerWantToSkipHu:
                 return player
         return None
 

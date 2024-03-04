@@ -5,9 +5,13 @@ class Actor:
         self.decks = []
         self.playerNumber = playerNumber
         self.decks.extend(deck)
+        self.playerWantToSkipHu = False
+        self.win = False
         self.decks.sort()
         self.pongdeck = []
         # self.display()
+    def playerWon(self):
+        self.win = True
 
     def display(self):
         print('Player : ', self.playerNumber)
@@ -117,6 +121,9 @@ class Actor:
             return True
         return False
 
+    def setPlayerWantToSkipHu(self, skip):
+        self.playerWantToSkipHu = skip
+
     def canShang(self, newDeck):
         for deck in range(len(self.decks)):
             if self.decks[deck] == newDeck + 1 and len(self.decks) - 1 != deck and self.decks[deck+1] == newDeck + 2:
@@ -136,7 +143,6 @@ class Actor:
         if twoeye is None:
             threeeye = self.find3Eye(completeNewDeck)
             if threeeye is None:
-                print("Cannot HU")
                 return False
             else:
                 completeNewDeck.remove(threeeye)
@@ -149,18 +155,16 @@ class Actor:
             return True
 
         elif len(completeNewDeck) % 3 != 0:
-            print("Cannot HU because not enough pieces")
             return False
 
         for i in range(len(completeNewDeck)//3):
             startingIndex = i*3
             sub = completeNewDeck[startingIndex: startingIndex+3]
-            print(self.isSuitOfThreeSeries(sub), self.isSuitOfThreeSame(sub), sub)
+            # print(self.isSuitOfThreeSeries(sub), self.isSuitOfThreeSame(sub), sub)
             if not (self.isSuitOfThreeSeries(sub) or self.isSuitOfThreeSame(sub)):
-                print("Cannot HU because not suit of three")
                 return False
-        print(completeNewDeck)
-        print("Can HU")
+        # print(completeNewDeck)
+        # print("Can HU")
         return True
 
     def isSuitOfThreeSeries(self, list):
@@ -240,5 +244,8 @@ class Actor:
                 self.pongdeck.append(newDeck - 2)
                 self.pongdeck.append(newDeck - 1)
                 self.pongdeck.append(newDeck)
+
+    def hu(self, newDeck):
+        self.decks.append(newDeck)
 
 
