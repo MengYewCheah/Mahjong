@@ -146,7 +146,7 @@ class Actor:
         n = len(eyeList)
 
         def findHu(ls):
-            deck = self.listToDeck(ls)
+            deck = self.listToDict(ls)
             zipai = [(k, v) for k, v in deck.items() if k < 20]
             circle = [(k, v) for k, v in deck.items() if k < 30 and k >= 20]
             thousand = [(k, v) for k, v in deck.items() if k < 40 and k >= 30]
@@ -212,7 +212,7 @@ class Actor:
     def isSuitOfThreeSame(self, list):
         return list[0] == list[1] and list[0] == list[2]
 
-    def listToDeck(self, ls):
+    def listToDict(self, ls):
         deck = dict()
         for item in ls:
             if item not in deck:
@@ -225,7 +225,7 @@ class Actor:
         # Count the number of each unique tile in the deck and return
         # tiles that can form a pair (at least 2).
         # Replaces find2Eyes, find3Eyes, findUnique and countRepeated.
-        deck = self.listToDeck(ls)
+        deck = self.listToDict(ls)
         return [k for k, v in deck.items() if v >= 2]
 
     def pong(self, newDeck):
