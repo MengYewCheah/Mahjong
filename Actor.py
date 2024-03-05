@@ -135,37 +135,32 @@ class Actor:
         return False
 
     def canHu(self, newDeck=None):
-        completeNewDeck = self.decks[:]
-        if newDeck is not None:
-            completeNewDeck.append(newDeck)
-        completeNewDeck.sort()
-        twoeye = self.find2Eye(completeNewDeck)
-        if twoeye is None:
-            threeeye = self.find3Eye(completeNewDeck)
-            if threeeye is None:
-                return False
-            else:
-                completeNewDeck.remove(threeeye)
-                completeNewDeck.remove(threeeye)
-        else:
-            completeNewDeck.remove(twoeye)
-            completeNewDeck.remove(twoeye)
-
-        if len(completeNewDeck) == 0:
-            return True
-
-        elif len(completeNewDeck) % 3 != 0:
+        deck = self.decks[:]
+        # print(len(deck))
+        if newDeck != None:
+            deck.append(newDeck)
+        deck.sort()
+        if len(deck) % 3 != 2:
             return False
 
-        for i in range(len(completeNewDeck)//3):
-            startingIndex = i*3
-            sub = completeNewDeck[startingIndex: startingIndex+3]
-            # print(self.isSuitOfThreeSeries(sub), self.isSuitOfThreeSame(sub), sub)
-            if not (self.isSuitOfThreeSeries(sub) or self.isSuitOfThreeSame(sub)):
-                return False
-        # print(completeNewDeck)
-        # print("Can HU")
-        return True
+        eyeList = self.findEyes(deck)
+        n = len(eyeList)
+        for j in range(n):
+            eye = eyeList[j]
+            completeNewDeck = deck[:]
+            completeNewDeck.remove(eye)
+            completeNewDeck.remove(eye)
+            hu = True
+
+            for i in range(len(completeNewDeck)//3):
+                startingIndex = i*3
+                sub = completeNewDeck[startingIndex: startingIndex+3]
+                if not (self.isSuitOfThreeSeries(sub) or self.isSuitOfThreeSame(sub)):
+                    hu = False
+                    break
+            if hu:
+                return True
+        return False
 
     def isSuitOfThreeSeries(self, list):
         return list[0] + 1 == list[1] and list[0] + 2 == list[2]
@@ -173,37 +168,17 @@ class Actor:
     def isSuitOfThreeSame(self, list):
         return list[0] == list[1] and list[0] == list[2]
 
-    def find2Eye(self, list):
-        newList = list[:]
-        newList.sort()
-        uniqeList = self.findUnique(newList)
-        for i in uniqeList:
-            if self.countRepeated(list, i) == 2:
-                return i
-        return None
-
-    def find3Eye(self, list):
-        newList = list[:]
-        newList.sort()
-        uniqeList = self.findUnique(newList)
-        for i in uniqeList:
-            if self.countRepeated(list, i) == 3:
-                return i
-        return None
-
-    def countRepeated(self, list, item):
-        count = 0
-        for i in list:
-            if i == item:
-                count += 1
-        return count
-
-    def findUnique(self, list):
-        uniqueList = []
-        for i in range(len(list)):
-            if list[i] not in uniqueList:
-                uniqueList.append(list[i])
-        return uniqueList
+    def findEyes(self, ls):
+        # Count the number of each unique tile in the deck and return
+        # tiles that can form a pair (at least 2).
+        # Replaces find2Eyes, find3Eyes, findUnique and countRepeated.
+        count = dict()
+        for item in ls:
+            if item not in count:
+                count[item] = 1
+            else:
+                count[item] += 1
+        return [k for k, v in count.items() if v >= 2]
 
     def pong(self, newDeck):
         if self.canPong(newDeck):
