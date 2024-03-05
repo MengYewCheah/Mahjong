@@ -136,7 +136,6 @@ class Actor:
 
     def canHu(self, newDeck=None):
         deck = self.decks[:]
-        # print(len(deck))
         if newDeck != None:
             deck.append(newDeck)
         deck.sort()
@@ -145,20 +144,65 @@ class Actor:
 
         eyeList = self.findEyes(deck)
         n = len(eyeList)
+
+        def findHu(ls):
+            deck = self.listToDeck(ls)
+            zipai = [(k, v) for k, v in deck.items() if k < 20]
+            circle = [(k, v) for k, v in deck.items() if k < 30 and k >= 20]
+            thousand = [(k, v) for k, v in deck.items() if k < 40 and k >= 30]
+            stick = [(k, v) for k, v in deck.items() if k < 50 and k >= 40]
+            nzipai = len(zipai)
+            ncircle = len(circle)
+            nthousand = len(thousand)
+            nstick = len(stick)
+
+            if nzipai % 3 != 0 or ncircle % 3 != 0 or nthousand % 3 != 0 or nstick % 3 != 0:
+                return False
+
+            for (k, v) in zipai:
+                if v != 3:
+                    return False
+
+            def tupleToList(tuples):
+                ans = []
+                for (k, v) in tuples:
+                    for i in range(v):
+                        ans.append(k)
+                return ans
+
+            def findCombo(ls):
+                # This function is not fully functional,
+                # it can only find SOME winning hand combo.
+                for i in range(len(ls)//3):
+                    startingIndex = i*3
+                    sub = ls[startingIndex: startingIndex+3]
+                    if not (self.isSuitOfThreeSeries(sub) or self.isSuitOfThreeSame(sub)):
+                        return False
+                return True
+
+            if ncircle != 0:
+                circleList = tupleToList(circle)
+                if not findCombo(circleList):
+                    return False
+
+            if nthousand != 0:
+                thousandList = tupleToList(thousand)
+                if not findCombo(thousandList):
+                    return False
+
+            if nstick != 0:
+                stickList = tupleToList(stick)
+                if not findCombo(stickList):
+                    return False
+
+            return True
+
         for j in range(n):
             eye = eyeList[j]
             completeNewDeck = deck[:]
             completeNewDeck.remove(eye)
             completeNewDeck.remove(eye)
-            hu = True
-
-            for i in range(len(completeNewDeck)//3):
-                startingIndex = i*3
-                sub = completeNewDeck[startingIndex: startingIndex+3]
-                if not (self.isSuitOfThreeSeries(sub) or self.isSuitOfThreeSame(sub)):
-                    hu = False
-                    break
-            if hu:
+            if findHu(completeNewDeck):
                 return True
         return False
 
@@ -168,17 +212,21 @@ class Actor:
     def isSuitOfThreeSame(self, list):
         return list[0] == list[1] and list[0] == list[2]
 
+    def listToDeck(self, ls):
+        deck = dict()
+        for item in ls:
+            if item not in deck:
+                deck[item] = 1
+            else:
+                deck[item] += 1
+        return deck
+
     def findEyes(self, ls):
         # Count the number of each unique tile in the deck and return
         # tiles that can form a pair (at least 2).
         # Replaces find2Eyes, find3Eyes, findUnique and countRepeated.
-        count = dict()
-        for item in ls:
-            if item not in count:
-                count[item] = 1
-            else:
-                count[item] += 1
-        return [k for k, v in count.items() if v >= 2]
+        deck = self.listToDeck(ls)
+        return [k for k, v in deck.items() if v >= 2]
 
     def pong(self, newDeck):
         if self.canPong(newDeck):
