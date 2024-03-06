@@ -170,29 +170,40 @@ class Actor:
                         ans.append(k)
                 return ans
 
-            def findCombo(ls):
-                # This function is not fully functional,
-                # it can only find SOME winning hand combo.
-                for i in range(len(ls)//3):
-                    startingIndex = i*3
-                    sub = ls[startingIndex: startingIndex+3]
-                    if not (self.isSuitOfThreeSeries(sub) or self.isSuitOfThreeSame(sub)):
-                        return False
-                return True
+            def comboFound(ls):
+                # It uses brute force but don't worry
+                # It's fast, trust me.
+                from itertools import combinations
+                comb = combinations(ls, 3)
+                target = len(ls) / 3
+                ans = 0
+
+                def same(sub):
+                    return sub[0] == sub[1] == sub[2]
+                
+                def increment(sub):
+                    return sub[0]+2 == sub[1]+1 == sub[2]
+
+                for c in comb:
+                    if same(c) or increment(c):
+                        ans += 1
+                        if ans == target:
+                            return True
+                return False
 
             if ncircle != 0:
                 circleList = tupleToList(circle)
-                if not findCombo(circleList):
+                if not comboFound(circleList):
                     return False
 
             if nthousand != 0:
                 thousandList = tupleToList(thousand)
-                if not findCombo(thousandList):
+                if not comboFound(thousandList):
                     return False
 
             if nstick != 0:
                 stickList = tupleToList(stick)
-                if not findCombo(stickList):
+                if not comboFound(stickList):
                     return False
 
             return True
