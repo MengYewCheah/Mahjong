@@ -190,7 +190,7 @@ class Actor:
                 validComb = []
                 for c in comb:
                     if pong(c) or chi(c):
-                        queue.append(([c], [[c], [], []]))
+                        queue.append(([c], ([c], [], [])))
                         validComb.append(c)
                 
                 while queue:
