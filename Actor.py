@@ -156,6 +156,8 @@ class Actor:
             nthousand = len(thousand)
             nstick = len(stick)
 
+            # The deck is broken down to 4 types, then the function uses combination to find
+            # the valid combinations. The function needs AT MOST 12C3 = 220 checks.
             if nzipai % 3 != 0 or ncircle % 3 != 0 or nthousand % 3 != 0 or nstick % 3 != 0:
                 return False
 
