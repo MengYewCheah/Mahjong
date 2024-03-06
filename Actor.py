@@ -187,21 +187,20 @@ class Actor:
                     return sub[0]+2 == sub[1]+1 == sub[2]
                 
                 queue = deque()
+                validComb = []
                 for c in comb:
-                    queue.append(([c], [[c], [], []]))
+                    if pong(c) or chi(c):
+                        queue.append(([c], [[c], [], []]))
+                        validComb.append(c)
                 
                 while queue:
                     (nodes, visited) = queue.popleft()
                     n = len(nodes)
                     current = nodes[n-1]
-                    if pong(current) or chi(current):
-                        if n == target:
-                            return True
-                    else:
-                        nodes.remove(current)
-                        n -= 1
+                    if n == target:
+                        return True
                     canVisit = False
-                    for c in comb:
+                    for c in validComb:
                         if c not in visited:
                             noIntersection = []
                             for i in range(n):
