@@ -176,7 +176,8 @@ class Actor:
                 # It uses brute force but don't worry
                 # It's fast, trust me.
                 from itertools import combinations
-                comb = combinations(ls, 3)
+                from collections import deque
+                comb = list(combinations(ls, 3))
                 target = len(ls) / 3
                 ans = 0
 
@@ -185,12 +186,21 @@ class Actor:
                 
                 def chi(sub):
                     return sub[0]+2 == sub[1]+1 == sub[2]
-
-                for c in comb:
-                    if pong(c) or chi(c):
+                
+                queue = deque()
+                queue.append((comb[0], [comb[0]]))
+                
+                while queue:
+                    (current, visited) = queue.popleft()
+                    if pong(current) or chi(current):
                         ans += 1
                         if ans == target:
                             return True
+                    for c in comb:
+                        if c not in visited and set(c).intersection(set(current)) == set():
+                            visited.append(c)
+                            queue.append((c, visited))
+                            break
                 return False
 
             if ncircle != 0:
