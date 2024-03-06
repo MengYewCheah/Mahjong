@@ -195,13 +195,14 @@ class Actor:
                 
                 while queue:
                     (nodes, visited) = queue.popleft()
+                    if nodes == [] and visited == [[], [], []]:
+                        return False
                     n = len(nodes)
-                    current = nodes[n-1]
                     if n == target:
                         return True
                     canVisit = False
                     for c in validComb:
-                        if c not in visited:
+                        if c not in visited[n]:
                             noIntersection = []
                             for i in range(n):
                                 if set(c).intersection(set(nodes[i])) == set():
@@ -210,11 +211,12 @@ class Actor:
                                     noIntersection.append(False)
                             if all(noIntersection):
                                 canVisit = True
-                                visited[n-1].append(c)
+                                visited[n].append(c)
                                 nodes.append(c)
                                 queue.append((nodes, visited))
                     if not canVisit:
-                        nodes.remove(current)
+                        nodes.remove(nodes[n-1])
+                        visited[n] = []
                         queue.append((nodes, visited))
                 return False
 
