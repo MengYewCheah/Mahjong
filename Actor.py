@@ -178,14 +178,14 @@ class Actor:
                 target = len(ls) / 3
                 ans = 0
 
-                def same(sub):
+                def pong(sub):
                     return sub[0] == sub[1] == sub[2]
                 
-                def increment(sub):
+                def chi(sub):
                     return sub[0]+2 == sub[1]+1 == sub[2]
 
                 for c in comb:
-                    if same(c) or increment(c):
+                    if pong(c) or chi(c):
                         ans += 1
                         if ans == target:
                             return True
