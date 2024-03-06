@@ -179,7 +179,6 @@ class Actor:
                 from collections import deque
                 comb = list(combinations(ls, 3))
                 target = len(ls) / 3
-                ans = 0
 
                 def pong(sub):
                     return sub[0] == sub[1] == sub[2]
@@ -188,19 +187,36 @@ class Actor:
                     return sub[0]+2 == sub[1]+1 == sub[2]
                 
                 queue = deque()
-                queue.append((comb[0], [comb[0]]))
+                for c in comb:
+                    queue.append(([c], [[c], [], []]))
                 
                 while queue:
-                    (current, visited) = queue.popleft()
+                    (nodes, visited) = queue.popleft()
+                    n = len(nodes)
+                    current = nodes[n-1]
                     if pong(current) or chi(current):
-                        ans += 1
-                        if ans == target:
+                        if n == target:
                             return True
+                    else:
+                        nodes.remove(current)
+                        n -= 1
+                    canVisit = False
                     for c in comb:
-                        if c not in visited and set(c).intersection(set(current)) == set():
-                            visited.append(c)
-                            queue.append((c, visited))
-                            break
+                        if c not in visited:
+                            noIntersection = []
+                            for i in range(n):
+                                if set(c).intersection(set(nodes[i])) == set():
+                                    noIntersection.append(True)
+                                else:
+                                    noIntersection.append(False)
+                            if all(noIntersection):
+                                canVisit = True
+                                visited[n-1].append(c)
+                                nodes.append(c)
+                                queue.append((nodes, visited))
+                    if not canVisit:
+                        nodes.remove(current)
+                        queue.append((nodes, visited))
                 return False
 
             if ncircle != 0:
