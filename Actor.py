@@ -195,8 +195,6 @@ class Actor:
                 
                 while queue:
                     (nodes, visited) = queue.popleft()
-                    if nodes == [] and visited == [[], [], []]:
-                        return False
                     n = len(nodes)
                     if n == target:
                         return True
@@ -215,6 +213,8 @@ class Actor:
                                 nodes.append(c)
                                 queue.append((nodes, visited))
                     if not canVisit:
+                        if n == 0:
+                            return False
                         nodes.remove(nodes[n-1])
                         visited[n] = []
                         queue.append((nodes, visited))
