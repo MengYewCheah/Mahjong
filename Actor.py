@@ -152,26 +152,26 @@ class Actor:
             n = len(keys)
 
             for i in range(n):
-                if counter[keys[i]] >= 3:
+                if  counter[keys[i]] >= 3:
                     counter[keys[i]] -= 3
                     if bt(counter, gotEyes):
                         return True
                     counter[keys[i]] += 3
 
-                if counter[keys[i]] >= 2 and not gotEyes:
+                if  counter[keys[i]] >= 2 and not gotEyes:
                     counter[keys[i]] -= 2
                     if bt(counter, True):
                         return True
                     counter[keys[i]] += 2
 
-                if counter[keys[i]] > 0 and i < n - 2:
-                    if counter[keys[i+1]] > 0 and keys[i]+1 == keys[i+1] and counter[keys[i+2]] > 0 and keys[i]+2 == keys[i+2]:
-                        counter[keys[i]] -= 1
+                if  counter[keys[i]] > 0 and i < n - 2:
+                    if  counter[keys[i+1]] > 0 and keys[i]+1 == keys[i+1] and counter[keys[i+2]] > 0 and keys[i]+2 == keys[i+2]:
+                        counter[keys[i]]   -= 1
                         counter[keys[i+1]] -= 1
                         counter[keys[i+2]] -= 1
                         if bt(counter, gotEyes):
                             return True
-                        counter[keys[i]] += 1
+                        counter[keys[i]]   += 1
                         counter[keys[i+1]] += 1
                         counter[keys[i+2]] += 1
             return False
