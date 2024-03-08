@@ -178,12 +178,6 @@ class Actor:
 
         return bt(counter, False)
 
-    def isSuitOfThreeSeries(self, list):
-        return list[0] + 1 == list[1] and list[0] + 2 == list[2]
-
-    def isSuitOfThreeSame(self, list):
-        return list[0] == list[1] and list[0] == list[2]
-
     def pong(self, newDeck):
         if self.canPong(newDeck):
             self.decks.remove(newDeck)
