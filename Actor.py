@@ -135,121 +135,48 @@ class Actor:
         return False
 
     def canHu(self, newDeck=None):
+        from collections import Counter
+
         deck = self.decks[:]
         if newDeck != None:
             deck.append(newDeck)
-        deck.sort()
         if len(deck) % 3 != 2:
             return False
+        deck.sort()
+        counter = Counter(deck)
 
-        eyeList = self.findEyes(deck)
-        n = len(eyeList)
+        def bt(counter, gotEyes):
+            if counter.total() == 0:
+                return gotEyes
+            keys = list(counter.keys())
+            n = len(keys)
 
-        def findHu(ls):
-            deck = self.listToDict(ls)
-            zipai = [(k, v) for k, v in deck.items() if k < 20]
-            circle = [(k, v) for k, v in deck.items() if k < 30 and k >= 20]
-            thousand = [(k, v) for k, v in deck.items() if k < 40 and k >= 30]
-            stick = [(k, v) for k, v in deck.items() if k < 50 and k >= 40]
-            nzipai = len(zipai)
-            ncircle = len(circle)
-            nthousand = len(thousand)
-            nstick = len(stick)
+            for i in range(n):
+                if  counter[keys[i]] >= 3:
+                    counter[keys[i]] -= 3
+                    if bt(counter, gotEyes):
+                        return True
+                    counter[keys[i]] += 3
 
-            # The deck is broken down to 4 types, then findHu uses combination to find
-            # the valid combinations. The function needs AT MOST 2 * 12C3 = 440 checks.
-            if nzipai % 3 != 0 or ncircle % 3 != 0 or nthousand % 3 != 0 or nstick % 3 != 0:
-                return False
+                if  counter[keys[i]] >= 2 and not gotEyes:
+                    counter[keys[i]] -= 2
+                    if bt(counter, True):
+                        return True
+                    counter[keys[i]] += 2
 
-            for (k, v) in zipai:
-                if v != 3:
-                    return False
-
-            def tupleToList(tuples):
-                ans = []
-                for (k, v) in tuples:
-                    for i in range(v):
-                        ans.append(k)
-                return ans
-
-            def comboFound(ls):
-                # It uses brute force but don't worry
-                # It's fast, trust me.
-                from itertools import combinations
-                from collections import deque
-                comb = list(combinations(ls, 3))
-                target = len(ls) / 3
-                ans = 0
-
-                def pong(sub):
-                    return sub[0] == sub[1] == sub[2]
-                
-                def chi(sub):
-                    return sub[0]+2 == sub[1]+1 == sub[2]
-                
-                queue = deque()
-                queue.append((comb[0], [comb[0]]))
-                
-                while queue:
-                    (current, visited) = queue.popleft()
-                    if pong(current) or chi(current):
-                        ans += 1
-                        if ans == target:
+                if  counter[keys[i]] > 0 and i < n - 2:
+                    if  counter[keys[i+1]] > 0 and keys[i]+1 == keys[i+1] and counter[keys[i+2]] > 0 and keys[i]+2 == keys[i+2]:
+                        counter[keys[i]]   -= 1
+                        counter[keys[i+1]] -= 1
+                        counter[keys[i+2]] -= 1
+                        if bt(counter, gotEyes):
                             return True
-                    for c in comb:
-                        if c not in visited and set(c).intersection(set(current)) == set():
-                            visited.append(c)
-                            queue.append((c, visited))
-                            break
-                return False
+                        counter[keys[i]]   += 1
+                        counter[keys[i+1]] += 1
+                        counter[keys[i+2]] += 1
+            return False
 
-            if ncircle != 0:
-                circleList = tupleToList(circle)
-                if not comboFound(circleList):
-                    return False
-
-            if nthousand != 0:
-                thousandList = tupleToList(thousand)
-                if not comboFound(thousandList):
-                    return False
-
-            if nstick != 0:
-                stickList = tupleToList(stick)
-                if not comboFound(stickList):
-                    return False
-
-            return True
-
-        for j in range(n):
-            eye = eyeList[j]
-            completeNewDeck = deck[:]
-            completeNewDeck.remove(eye)
-            completeNewDeck.remove(eye)
-            if findHu(completeNewDeck):
-                return True
-        return False
-
-    def isSuitOfThreeSeries(self, list):
-        return list[0] + 1 == list[1] and list[0] + 2 == list[2]
-
-    def isSuitOfThreeSame(self, list):
-        return list[0] == list[1] and list[0] == list[2]
-
-    def listToDict(self, ls):
-        deck = dict()
-        for item in ls:
-            if item not in deck:
-                deck[item] = 1
-            else:
-                deck[item] += 1
-        return deck
-
-    def findEyes(self, ls):
-        # Count the number of each unique tile in the deck and return
-        # tiles that can form a pair (at least 2).
-        # Replaces find2Eyes, find3Eyes, findUnique and countRepeated.
-        deck = self.listToDict(ls)
-        return [k for k, v in deck.items() if v >= 2]
+        return bt(counter, False)
 
     def pong(self, newDeck):
         if self.canPong(newDeck):
