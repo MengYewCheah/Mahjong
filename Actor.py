@@ -146,7 +146,8 @@ class Actor:
         counter = Counter(deck)
 
         def bt(counter, gotEyes):
-            if counter.total() == 0:
+            print(counter)
+            if sum(counter.values()) == 0:
                 return gotEyes
             keys = list(counter.keys())
             n = len(keys)
